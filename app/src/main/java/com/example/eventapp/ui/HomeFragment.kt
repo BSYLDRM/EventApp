@@ -2,8 +2,8 @@ package com.example.eventapp.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -65,6 +64,8 @@ class HomeFragment : Fragment() {
 
         requestPermission()
         observeEvents()
+        binding.lottieAnimationView.visibility = View.VISIBLE  // Animasyonu göster
+        binding.recyclerViewHomeEvent.visibility = View.GONE   // RecyclerView'ı gizle
     }
 
     private fun requestPermission() {
@@ -146,8 +147,12 @@ class HomeFragment : Fragment() {
             if (events.isNotEmpty()) {
                 val adapter = EventsAdapter(events)
                 binding.recyclerViewHomeEvent.adapter = adapter
+                binding.lottieAnimationView.visibility = View.GONE
+                binding.recyclerViewHomeEvent.visibility = View.VISIBLE
             } else {
                 Log.d("HomeFragment", "No events found.")
+                binding.lottieAnimationView.visibility = View.VISIBLE
+                binding.recyclerViewHomeEvent.visibility = View.GONE
             }
         }
     }

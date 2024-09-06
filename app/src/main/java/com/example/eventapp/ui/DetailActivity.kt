@@ -2,9 +2,11 @@ package com.example.eventapp.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.example.eventapp.R
 import com.example.eventapp.databinding.ActivityDetailBinding
@@ -26,12 +28,24 @@ class DetailActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-
         observeViewModel()
         intent?.getStringExtra("event_id")?.let {
             fetchEventDetails(it)
         }
+
+        val backButton = findViewById<ImageButton>(R.id.iconBackImage)
+        backButton.setOnClickListener {
+            // Back stack'teki son fragment'i al
+            val fragmentManager = supportFragmentManager
+            if (fragmentManager.backStackEntryCount > 0) {
+                val lastFragment = fragmentManager.getBackStackEntryAt(fragmentManager.backStackEntryCount - 1)
+                fragmentManager.popBackStack(lastFragment.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            } else {
+                finish() // Back stack'te hiç fragment yoksa Activity'yi bitir
+            }
+        }
     }
+
 
     private fun fetchEventDetails(eventId: String) {
         viewModel.fetchEventDetails(eventId)

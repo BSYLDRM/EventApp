@@ -22,7 +22,7 @@ class FavoriteViewModel : ViewModel(){
                 }
                 _favoriteEvents.value = events
             } catch (e: Exception) {
-                // Hata yönetimi
+
             }
         }
     }

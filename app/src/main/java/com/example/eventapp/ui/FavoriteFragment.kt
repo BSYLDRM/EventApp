@@ -25,7 +25,9 @@ class FavoriteFragment : Fragment() {
 
         setupRecyclerView()
         observeViewModel()
-
+        fetchFavoritesFromFirebase()
+        setupSwipeRefresh()
+        showLoadingAnimation(true)
         fetchFavoritesFromFirebase()
 
         return binding.root
@@ -35,11 +37,14 @@ class FavoriteFragment : Fragment() {
         adapter = EventsAdapter()
         binding.recyclerFavorite.adapter = adapter
         binding.recyclerFavorite.layoutManager = LinearLayoutManager(requireContext())
+
     }
 
     private fun observeViewModel() {
         viewModel.favoriteEvents.observe(viewLifecycleOwner) { events ->
             adapter.submitList(events)
+            showLoadingAnimation(false)
+            binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 
@@ -55,6 +60,24 @@ class FavoriteFragment : Fragment() {
                 val favoriteIds = documents.map { it.id }
                 viewModel.fetchFavoriteEvents(favoriteIds)
             }
+            .addOnFailureListener {
+                // Verileri yükleme başarısız olduysa animasyonu gizle
+                showLoadingAnimation(false)
+            }
+    }
+    private fun setupSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            fetchFavoritesFromFirebase()
+        }
+    }
+    private fun showLoadingAnimation(show: Boolean) {
+        if (show) {
+            // Lottie animasyonunu göster
+            binding.lottieAnimationView.visibility = View.VISIBLE
+        } else {
+            // Lottie animasyonunu gizle
+            binding.lottieAnimationView.visibility = View.GONE
+        }
     }
     object Constants {
         const val USERS_COLLECTION = "users"

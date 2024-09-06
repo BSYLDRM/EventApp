@@ -62,6 +62,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFragment(container: Int, fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(container, fragment).commit()
+
+        supportFragmentManager.beginTransaction()
+            .replace(container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

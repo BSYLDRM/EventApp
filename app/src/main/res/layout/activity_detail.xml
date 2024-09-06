@@ -19,12 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/iconImage"
+    <ImageButton
+        android:id="@+id/iconBackImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
+        android:contentDescription="TODO"
         android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="@id/imageViewActivity"
         app:layout_constraintTop_toTopOf="@id/imageViewActivity" />
