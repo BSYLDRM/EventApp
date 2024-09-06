@@ -1,0 +1,50 @@
+package com.example.eventapp.ui
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import com.example.eventapp.R
+import com.example.eventapp.databinding.FragmentSettingBinding
+import com.example.eventapp.login.LoginScreen
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
+
+class SettingFragment : Fragment() {
+    private lateinit var binding: FragmentSettingBinding
+    private lateinit var auth: FirebaseAuth
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSettingBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        auth = Firebase.auth
+
+        val textOut = view.findViewById<TextView>(R.id.textOut)
+        textOut.setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun logout() {
+        auth.signOut()
+        navigateToLoginScreen()
+    }
+
+    private fun navigateToLoginScreen() {
+        val intent = Intent(requireContext(), LoginScreen::class.java)
+        startActivity(intent)
+        activity?.finish()
+    }
+
+}
