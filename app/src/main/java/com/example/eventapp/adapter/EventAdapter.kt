@@ -29,7 +29,7 @@ class EventsAdapter(
             binding.textViewCity.text = event.embedded.venues.firstOrNull()?.city?.name
 
             event.images
-                .filter { it.ratio == "16_9" }
+                .filter { it.ratio == "3_2" }
                 .maxByOrNull { it.width }
                 ?.let { image ->
                     Glide.with(binding.imageActivity.context)
@@ -64,7 +64,6 @@ class EventsAdapter(
         }
 
         private fun toggleFavorite(event: Event, favoriteRef: DocumentReference) {
-            val userId = auth.currentUser?.uid ?: return
             favoriteRef.get().addOnSuccessListener { document ->
                 if (document.exists()) {
                     favoriteRef.delete().addOnSuccessListener {
@@ -102,8 +101,6 @@ class EventsAdapter(
         eventsList = newEvents
         notifyDataSetChanged()
     }
-
-    fun getFavoriteEvents(): List<Event> = favoriteEventsList
 
     companion object {
         private const val USERS_COLLECTION = "users"

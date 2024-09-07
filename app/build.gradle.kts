@@ -84,4 +84,6 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:25.1.0")
     implementation("com.google.android.gms:play-services-maps:19.0.0")
     implementation("com.airbnb.android:lottie:4.2.0")
+    implementation("com.github.ibrahimsn98:SmoothBottomBar:1.7.9")
+    implementation("com.github.sparrow007:carouselrecyclerview:1.2.6")
 }

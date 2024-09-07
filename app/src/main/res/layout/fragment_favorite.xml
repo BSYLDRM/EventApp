@@ -8,7 +8,8 @@
     android:contentDescription=""
     tools:context=".ui.FavoriteFragment"
     tools:ignore="MissingClass"
-    android:id="@+id/swipeRefreshLayout">
+    android:id="@+id/swipeRefreshLayout"
+    android:background="?backgroundColor">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFavorite"

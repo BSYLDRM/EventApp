@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,9 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentHomeBinding
 import com.example.eventapp.service.retrofit.RetrofitGeocodingInstance
@@ -22,6 +26,7 @@ import com.example.eventapp.viewmodel.HomeViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -113,7 +118,8 @@ class HomeFragment : Fragment() {
                         }
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT)
+                        .show()
                     // Konum null ise burada nasıl işlem yapmak istediğinize karar verin
                 }
             }
@@ -147,6 +153,11 @@ class HomeFragment : Fragment() {
             if (events.isNotEmpty()) {
                 val adapter = EventsAdapter(events)
                 binding.recyclerViewHomeEvent.adapter = adapter
+                binding.recyclerViewHomeEvent.apply {
+                    setAlpha(true)
+                    set3DItem(true)
+                }
+
                 binding.lottieAnimationView.visibility = View.GONE
                 binding.recyclerViewHomeEvent.visibility = View.VISIBLE
             } else {

@@ -1,65 +1,46 @@
 package com.example.eventapp.login
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.eventapp.MainActivity
+import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
+import com.example.eventapp.R
 import com.example.eventapp.databinding.ActivityLoginScreenBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class LoginScreen : AppCompatActivity() {
     private lateinit var binding: ActivityLoginScreenBinding
-    private lateinit var auth: FirebaseAuth
+    private lateinit var lottieAnimationView: LottieAnimationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        auth = Firebase.auth
-        if (auth.currentUser != null) {
-            navigateToHomeFragment()
-        }
+
+        lottieAnimationView = findViewById(R.id.lottie_animation_view)
+
+        // Animasyonu başlat
+        lottieAnimationView.visibility = View.VISIBLE
+        lottieAnimationView.playAnimation()
 
         binding.buttonLogin.setOnClickListener {
-            loginUser()
+            replaceFragment(SignInFragment())
         }
 
         binding.buttonSignup.setOnClickListener {
-            navigateToSignUpActivity()
+            replaceFragment(SignupFragment())
         }
     }
 
-    private fun loginUser() {
-        val email = binding.editTextTextEmailAddress.text.toString()
-        val password = binding.editTextTextPassword.text.toString()
+    fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+        val transaction = supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
 
-        if (email.isNotEmpty() && password.isNotEmpty()) {
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = auth.currentUser
-                        navigateToHomeFragment()
-                    } else {
-                        Toast.makeText(this, "Kullanıcı adı veya şifre yanlış", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-        } else {
-            Toast.makeText(this, "Lütfen e-posta ve şifre girin", Toast.LENGTH_SHORT).show()
+        if (addToBackStack) {
+            transaction.addToBackStack(null) // Geri dönülebilir bir yığın ekle
         }
-    }
 
-    private fun navigateToHomeFragment() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun navigateToSignUpActivity() {
-        val intent = Intent(this, SignupScreen::class.java)
-        startActivity(intent)
+        transaction.commit()
     }
 
 }

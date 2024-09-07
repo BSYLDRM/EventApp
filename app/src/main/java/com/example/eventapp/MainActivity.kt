@@ -2,6 +2,7 @@ package com.example.eventapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,6 +15,8 @@ import com.example.eventapp.ui.HomeFragment
 import com.example.eventapp.ui.SearchFragment
 import com.example.eventapp.ui.SettingFragment
 import com.google.firebase.auth.FirebaseAuth
+import me.ibrahimsn.lib.OnItemReselectedListener
+import me.ibrahimsn.lib.OnItemSelectedListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,36 +33,32 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        setupNavigationBar()
-    }
-
-    private fun setupNavigationBar() {
-        binding.navigationBarView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
+        binding.navigationBarView.setOnItemSelectedListener { pos ->
+            when (pos) {
+                0 -> {
                     openFragment(R.id.mainFragmentContainer, HomeFragment())
-                    true
                 }
 
-                R.id.nav_filter -> {
+                1 -> {
                     openFragment(R.id.mainFragmentContainer, SearchFragment())
-                    true
                 }
 
-                R.id.nav_favorite -> {
+                2 -> {
                     openFragment(R.id.mainFragmentContainer, FavoriteFragment())
-                    true
                 }
 
-                R.id.nav_settings -> {
+                3 -> {
                     openFragment(R.id.mainFragmentContainer, SettingFragment())
-                    true
                 }
 
-                else -> false
+                else -> {
+                    openFragment(R.id.mainFragmentContainer, HomeFragment())
+                }
             }
         }
+        val fragmentToOpen = intent.getStringExtra("fragment_to_open")
     }
+
 
     private fun openFragment(container: Int, fragment: Fragment) {
 

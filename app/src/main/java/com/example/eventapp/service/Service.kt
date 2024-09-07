@@ -11,7 +11,6 @@ import retrofit2.http.Query
 interface Service {
     @GET(searchEvent)
     suspend fun getEvents(
-        @Query("page") page: Int = 20,
         @Query("classificationName") classificationName: List<String>?=null,
         @Query("classificationId") classificationId:List<String>?=null,
         @Query("countryCode") countryCode: String? = null,

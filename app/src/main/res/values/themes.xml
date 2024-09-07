@@ -1,7 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.EventApp" parent="Theme.Material3.DayNight.NoActionBar">
-
+        <item name="backgroundColor">@color/gray</item>
+        <item name="buttonTint">@color/purple</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="hintTextColor">@color/hint</item>
+        <item name="android:statusBarColor">@color/gray</item>
     </style>
 
     <style name="Theme.EventApp" parent="Base.Theme.EventApp" />

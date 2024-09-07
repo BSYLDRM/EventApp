@@ -4,23 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HomeFragment">
-    <androidx.recyclerview.widget.RecyclerView
+    tools:context=".ui.HomeFragment"
+    android:background="?backgroundColor">
+
+    <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
         android:id="@+id/recyclerViewHomeEvent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_event" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_event"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_animation_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:lottie_fileName="eventsearch.json"
+        android:visibility="gone"
         app:lottie_autoPlay="true"
+        app:lottie_fileName="eventsearch.json"
         app:lottie_loop="true"
-        tools:ignore="MissingConstraints">
-    </com.airbnb.lottie.LottieAnimationView>
-
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

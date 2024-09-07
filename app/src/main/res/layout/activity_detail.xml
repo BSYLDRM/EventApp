@@ -4,190 +4,292 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailActivity">
+    android:background="?backgroundColor"
+    tools:context=".ui.DetailActivity"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/imageViewActivity"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:contentDescription="@string/concert_image"
-        android:foreground="@drawable/gradient_white_foreground"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_back"
-        app:layout_constraintDimensionRatio="16:9"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true">
 
-    <ImageButton
-        android:id="@+id/iconBackImage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="36dp"
-        android:contentDescription="TODO"
-        android:src="@drawable/back"
-        app:layout_constraintStart_toStartOf="@id/imageViewActivity"
-        app:layout_constraintTop_toTopOf="@id/imageViewActivity" />
-
-    <TextView
-        android:id="@+id/textActivityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_8"
-        android:text="@string/default_artist"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewActivity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewActivity" />
-
-    <TextView
-        android:id="@+id/textEventType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_event_type"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintStart_toStartOf="@+id/textActivityName"
-        app:layout_constraintTop_toBottomOf="@+id/textActivityName" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/textEventType"
-        app:layout_constraintTop_toBottomOf="@+id/textEventType">
-
-        <ImageView
-            android:id="@+id/imageViewCalendar"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="@string/calender"
-            android:src="@drawable/calendar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8"
-            android:text="@string/default_date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toBottomOf="@+id/imageViewCalendar"
-            app:layout_constraintStart_toEndOf="@+id/imageViewCalendar"
-            app:layout_constraintTop_toTopOf="@+id/imageViewCalendar" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayoutDate"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDate">
-
-
-        <TextView
-            android:id="@+id/textCountry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_country"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textCity" />
-
-        <TextView
-            android:id="@+id/textCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8"
-            android:text="@string/default_city"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintStart_toEndOf="@+id/textCountry"
-            app:layout_constraintTop_toBottomOf="@id/textDate"
-            tools:ignore="NotSibling" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCity">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutAdrees"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayoutCity"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCity">
-
-        <ImageView
-            android:id="@+id/imageViewAdrees"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="@string/calender"
-            android:src="@drawable/adress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textAdrees"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8"
-            android:text="@string/default_city"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageViewAdrees"
-            app:layout_constraintTop_toTopOf="@+id/imageViewAdrees" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:layout_marginTop="@dimen/margin_8"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayoutAdrees"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutAdrees" />
-
-    <TextView
-        android:id="@+id/textEventUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_16"
-        android:autoLink="web"
-        android:text="@string/default_url"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardView"
-        app:layout_constraintStart_toStartOf="@+id/materialCardView" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/margin_16"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="16:9"
-        tools:layout_editor_absoluteX="8dp">
-
-        <FrameLayout
-            android:id="@+id/map"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp">
 
-    </com.google.android.material.card.MaterialCardView>
+            <ImageView
+                android:id="@+id/imageViewActivity"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:contentDescription="@string/concert_image"
+                android:foreground="@drawable/gradient_foreground"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_back"
+                app:layout_constraintDimensionRatio="3:2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iconBackImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="@dimen/spacer_16"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/mini_button_background"
+                android:contentDescription="@string/back"
+                android:padding="@dimen/margin_8"
+                android:src="@drawable/back"
+                app:layout_constraintStart_toStartOf="@id/imageViewActivity"
+                app:layout_constraintTop_toTopOf="@id/imageViewActivity"
+                app:tint="@color/white" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/light_gray"
+                app:cardCornerRadius="@dimen/spacer_16"
+                app:layout_constraintBottom_toBottomOf="@+id/iconBackImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iconBackImage"
+                card_view:contentPadding="@dimen/margin_8">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/city"
+                        android:src="@drawable/adress"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/purple" />
+
+                    <TextView
+                        android:id="@+id/textCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_8"
+                        android:text="@string/default_city"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/imageHeart"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/spacer_16"
+                android:background="@drawable/mini_button_background"
+                android:contentDescription="@string/add_favorite"
+                android:padding="@dimen/margin_8"
+                android:src="@drawable/heart"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cardView2"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/textActivityName"
+                android:layout_width="0dp"
+                android:layout_marginHorizontal="@dimen/spacer_16"
+                android:layout_height="wrap_content"
+                android:text="@string/default_artist"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewActivity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewActivity" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/spacer_16"
+                app:layout_constraintBottom_toTopOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/textActivityName">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:contentPadding="@dimen/spacer_16"
+                    app:cardBackgroundColor="@color/light_gray"
+                    app:cardCornerRadius="@dimen/margin_8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageViewCalendar"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="@dimen/spacer_16"
+                            android:contentDescription="@string/calender"
+                            android:src="@drawable/calendar"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/purple" />
+
+                        <TextView
+                            android:id="@+id/textDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/default_date"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageViewCalendar"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageViewCalendar" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:contentPadding="@dimen/spacer_16"
+                    app:cardBackgroundColor="@color/light_gray"
+                    app:cardCornerRadius="@dimen/margin_8"
+                    app:layout_constraintBottom_toTopOf="@+id/cardViewAdrees"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewDate">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageTime"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="@dimen/spacer_16"
+                            android:contentDescription="@string/calender"
+                            android:src="@drawable/clock"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/purple" />
+
+                        <TextView
+                            android:id="@+id/textTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/default_time"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageTime"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageTime" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewAdrees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:contentPadding="@dimen/spacer_16"
+                    app:cardBackgroundColor="@color/light_gray"
+                    app:cardCornerRadius="@dimen/margin_8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageViewAdrees"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="@dimen/spacer_16"
+                            android:contentDescription="@string/calender"
+                            android:src="@drawable/adress"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/purple" />
+
+                        <TextView
+                            android:id="@+id/textAdrees"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/spacer_16"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/default_city"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageViewAdrees"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewAdrees"
+                            app:layout_constraintTop_toTopOf="@+id/imageViewAdrees" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/spacer_16"
+                app:layout_constraintBottom_toTopOf="@+id/btnUrl"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <FrameLayout
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacer_16"
+                android:background="@drawable/button_background"
+                android:padding="@dimen/margin_8"
+                android:text="@string/buy_ticket"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?backgroundColor"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +18,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/margin_64"
-            android:layout_height="@dimen/margin_64"
+            android:layout_width="@dimen/spacer_64"
+            android:layout_height="@dimen/spacer_64"
             android:contentDescription="@string/app_logo"
             android:src="@drawable/app_logo"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,26 +38,43 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFragmentContainer"
+        android:name="com.example.eventapp.ui.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:name="com.example.eventapp.ui.HomeFragment"
-        app:layout_constraintBottom_toTopOf="@+id/navigationBarView"
+        app:layout_constraintBottom_toTopOf="@+id/viewBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleLayout"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/viewTop" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <View
+        android:id="@+id/viewTop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleLayout" />
+
+    <View
+        android:id="@+id/viewBottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@+id/navigationBarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/navigationBarView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_64"
-        android:background="@color/white"
-        app:itemActiveIndicatorStyle="?color"
+        android:layout_height="@dimen/spacer_64"
+        app:indicatorColor="@color/purple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu"
-        app:labelVisibilityMode="selected"/>
+        app:menu="@menu/bottom_menu"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

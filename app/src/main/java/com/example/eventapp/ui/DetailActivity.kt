@@ -1,7 +1,10 @@
 package com.example.eventapp.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,34 +24,25 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private val viewModel: DetailViewModel by viewModels()
     private lateinit var map: GoogleMap
+    private lateinit var btnUrl: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
-
+        btnUrl = findViewById(R.id.btnUrl)
         observeViewModel()
         intent?.getStringExtra("event_id")?.let {
             fetchEventDetails(it)
         }
 
-        val backButton = findViewById<ImageButton>(R.id.iconBackImage)
-        backButton.setOnClickListener {
-            // Back stack'teki son fragment'i al
-            val fragmentManager = supportFragmentManager
-            if (fragmentManager.backStackEntryCount > 0) {
-                val lastFragment =
-                    fragmentManager.getBackStackEntryAt(fragmentManager.backStackEntryCount - 1)
-                fragmentManager.popBackStack(
-                    lastFragment.name,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE
-                )
-            } else {
-                finish() // Back stack'te hiç fragment yoksa Activity'yi bitir
-            }
+        binding.iconBackImage.setOnClickListener {
+            finish()
         }
     }
+
 
 
     private fun fetchEventDetails(eventId: String) {
@@ -62,24 +56,18 @@ class DetailActivity : AppCompatActivity() {
                 binding.textAdrees.text = it.embedded.venues.firstOrNull()?.address?.line1
                 binding.textDate.text = it.dates.start.localDate
                 binding.textCity.text = it.embedded.venues.firstOrNull()?.city?.name
-                binding.textCountry.text =
-                    it.embedded.venues.first().country.name.toString()
-                binding.textDescription.text = it.promoter.description
+                binding.textTime.text = it.dates.start.localTime
 
-
-                val genre = it.classifications.firstOrNull()?.genre?.name ?: "Unknown"
-                val subGenre = it.classifications.firstOrNull()?.subGenre?.name ?: "Unknown"
-                val eventType = "$genre - $subGenre"
-
-
-                binding.textEventType.text = eventType
-
-                binding.textEventUrl.text = it.url
+                it.url.let { url ->
+                    btnUrl.setOnClickListener {
+                        openUrl(url)
+                    }
+                }
                 event.images
-                    .filter { it.ratio == "16_9" }
+                    .filter { it.ratio == "4_3" }
                     .maxByOrNull { it.width }
                     ?.let { image ->
-                        Glide.with(binding.imageViewActivity)
+                        Glide.with(this)
                             .load(image.url)
                             .into(binding.imageViewActivity)
                     }
@@ -116,4 +104,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
+    private fun openUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)}
 }
