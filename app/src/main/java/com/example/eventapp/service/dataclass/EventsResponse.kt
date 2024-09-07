@@ -27,6 +27,8 @@ data class Event(
     val images: List<Image>,
     @SerializedName("dates")
     val dates: Dates,
+    @SerializedName("promoter")
+    val promoter: Promoter,
     @SerializedName("classifications")
     val classifications: List<Classification>,
     @SerializedName("_embedded")
@@ -86,40 +88,21 @@ data class Start(
 data class EventEmbedded(
     @SerializedName("venues")
     val venues: List<Venue>,
-    @SerializedName("attractions")
-    val attractions: List<Attraction>
-)
-
-data class Attraction(
-    @SerializedName("name")
-    val name: String,
-    @SerializedName("type")
-    val type: AttractionType,
-    @SerializedName("id")
-    val id: String,
-    @SerializedName("test")
-    val test: Boolean,
-    @SerializedName("url")
-    val url: String,
-    @SerializedName("images")
-    val images: List<Image>,
-    @SerializedName("classifications")
-    val classifications: List<Classification>
 )
 
 data class Image(
     @SerializedName("url")
     val url: String,
     @SerializedName("ratio")
-val ratio: String,
-@SerializedName("width")
-val width: Int
+    val ratio: String,
+    @SerializedName("width")
+    val width: Int
 )
 
-enum class AttractionType(val value: String) {
-    @SerializedName("attraction")
-    ATTRACTION("attraction")
-}
+data class Promoter(
+    @SerializedName("description")
+    val description: String
+)
 
 data class Venue(
     @SerializedName("name")

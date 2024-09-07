@@ -19,12 +19,13 @@
         android:layout_marginStart="@dimen/margin_24"
         android:layout_marginEnd="@dimen/margin_24"
         android:layout_marginTop="32dp"
+        android:drawableEnd="@drawable/baseline_search_24"
         app:layout_constraintBottom_toTopOf="@id/recyclerSearch"
         android:hint="@string/edit_search"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerSearch"

@@ -155,6 +155,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:layout_marginTop="@dimen/margin_8"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayoutAdrees"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutAdrees" />
+
+    <TextView
         android:id="@+id/textEventUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

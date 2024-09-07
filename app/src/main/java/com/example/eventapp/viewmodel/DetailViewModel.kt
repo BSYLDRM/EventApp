@@ -19,6 +19,8 @@ class DetailViewModel : ViewModel() {
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
 
+    private val api = RetrofitInstance.api
+
     fun fetchEventDetails(eventId: String) {
         _loading.value = true
         viewModelScope.launch {

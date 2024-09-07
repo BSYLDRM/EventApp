@@ -16,9 +16,8 @@ interface Service {
         @Query("classificationId") classificationId:List<String>?=null,
         @Query("countryCode") countryCode: String? = null,
         @Query("city") city: String? = null,
-        @Query("keyword") keyword: String? = null,
+       @Query("name") name: String? = null
     ): EventsResponse
-
 
     @GET("events/{id}.json")
     suspend fun getEventDetails(

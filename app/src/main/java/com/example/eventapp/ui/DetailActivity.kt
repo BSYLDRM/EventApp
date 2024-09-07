@@ -38,8 +38,12 @@ class DetailActivity : AppCompatActivity() {
             // Back stack'teki son fragment'i al
             val fragmentManager = supportFragmentManager
             if (fragmentManager.backStackEntryCount > 0) {
-                val lastFragment = fragmentManager.getBackStackEntryAt(fragmentManager.backStackEntryCount - 1)
-                fragmentManager.popBackStack(lastFragment.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                val lastFragment =
+                    fragmentManager.getBackStackEntryAt(fragmentManager.backStackEntryCount - 1)
+                fragmentManager.popBackStack(
+                    lastFragment.name,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
             } else {
                 finish() // Back stack'te hiç fragment yoksa Activity'yi bitir
             }
@@ -59,11 +63,12 @@ class DetailActivity : AppCompatActivity() {
                 binding.textDate.text = it.dates.start.localDate
                 binding.textCity.text = it.embedded.venues.firstOrNull()?.city?.name
                 binding.textCountry.text =
-                    it.embedded.venues.firstOrNull()?.country?.name.toString()
+                    it.embedded.venues.first().country.name.toString()
+                binding.textDescription.text = it.promoter.description
 
 
-                val genre = it.classifications.firstOrNull()?.genre?.name ?: "Belirtilmemiş"
-                val subGenre = it.classifications.firstOrNull()?.subGenre?.name ?: "Belirtilmemiş"
+                val genre = it.classifications.firstOrNull()?.genre?.name ?: "Unknown"
+                val subGenre = it.classifications.firstOrNull()?.subGenre?.name ?: "Unknown"
                 val eventType = "$genre - $subGenre"
 
 

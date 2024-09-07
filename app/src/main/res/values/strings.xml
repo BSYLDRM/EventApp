@@ -23,4 +23,5 @@
     <string name="default_country">default_country</string>
     <string name="edit_search">Search</string>
     <string name="default_url">buse@gmail.com</string>
+    <string name="click">\nclick to call</string>
 </resources>
