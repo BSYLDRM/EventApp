@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin_8"
+    android:padding="@dimen/spacer_8"
     android:layout_marginHorizontal="@dimen/spacer_32">
 
     <com.google.android.material.card.MaterialCardView

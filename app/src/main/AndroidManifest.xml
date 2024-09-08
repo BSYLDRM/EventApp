@@ -24,11 +24,8 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDbUOCTzB4poidP9u3nu7UYWAI7Uoq77xg" />
+            android:value="@string/MAP_API_KEYS" />
 
-        <activity
-            android:name=".login.SignupScreen"
-            android:exported="false" />
         <activity
             android:name=".login.LoginScreen"
             android:exported="false" />

@@ -12,11 +12,15 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentSearchBinding
+import com.example.eventapp.viewmodel.FavoriteViewModel
 import com.example.eventapp.viewmodel.SearchViewModel
 
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
+
     private val viewModel: SearchViewModel by viewModels()
+    private val favoriteViewModel: FavoriteViewModel by viewModels()
+
     private lateinit var adapter: EventsAdapter
 
     override fun onCreateView(
@@ -30,17 +34,21 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // RecyclerView ve adaptör ayarları
-        adapter = EventsAdapter()
+        adapter = EventsAdapter(
+            eventsList = emptyList(),
+            isFavorite = { eventId, callback ->
+                favoriteViewModel.isFavorite(eventId, callback)
+            },
+            toggleFavorite = { event, callback ->
+                favoriteViewModel.toggleFavorite(event, callback)
+            }
+        )
         binding.recyclerSearch.adapter = adapter
         binding.recyclerSearch.layoutManager = LinearLayoutManager(requireContext())
 
-        // Arama işlemi için EditText üzerinde dinleyici ayarla
         binding.editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val query = s.toString()
-
-                // En az 3 karakter girildiğinde arama yapılacak
                 if (query.length >= 3) {
                     viewModel.searchEvents(city = query)
                 }
@@ -49,27 +57,20 @@ class SearchFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
-
-        // ViewModel'den gelen verileri gözlemle
         observeViewModel()
     }
 
     private fun observeViewModel() {
         viewModel.events.observe(viewLifecycleOwner) { eventsResponse ->
             if (eventsResponse?.embedded?.events != null) {
-                // RecyclerView adaptörüne verileri ekle
                 adapter.submitList(eventsResponse.embedded.events)
             } else {
-                // Null durumunda boş bir liste göster
                 adapter.submitList(emptyList())
             }
         }
 
-        // Hata mesajlarını gözlemle
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
 }
-
-

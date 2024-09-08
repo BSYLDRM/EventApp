@@ -9,7 +9,6 @@ import com.example.eventapp.service.dataclass.Event
 import com.example.eventapp.service.retrofit.RetrofitInstance
 import kotlinx.coroutines.launch
 
-
 class HomeViewModel : ViewModel() {
     private val _events = MutableLiveData<List<Event>>()
     val events: LiveData<List<Event>> = _events

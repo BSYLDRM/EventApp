@@ -29,6 +29,8 @@ android {
         buildConfigField("String", "BASE_URL", properties.getProperty("BASE_URL"))
         buildConfigField("String", "API_KEY", properties.getProperty("API_KEY"))
         buildConfigField("String", "MAP_API_KEYS", properties.getProperty("MAP_API_KEYS"))
+        resValue("string", "MAP_API_KEYS", properties.getProperty("MAP_API_KEYS"))
+        buildConfigField("String", "MAP_BASE_URL", properties.getProperty("MAP_BASE_URL"))
     }
 
     buildTypes {

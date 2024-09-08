@@ -3,10 +3,10 @@ package com.example.eventapp.login
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.example.eventapp.R
 import com.example.eventapp.databinding.ActivityLoginScreenBinding
+import com.example.eventapp.extension.openFragment
 
 class LoginScreen : AppCompatActivity() {
     private lateinit var binding: ActivityLoginScreenBinding
@@ -18,29 +18,15 @@ class LoginScreen : AppCompatActivity() {
         setContentView(binding.root)
 
         lottieAnimationView = findViewById(R.id.lottie_animation_view)
-
-        // Animasyonu başlat
         lottieAnimationView.visibility = View.VISIBLE
         lottieAnimationView.playAnimation()
 
         binding.buttonLogin.setOnClickListener {
-            replaceFragment(SignInFragment())
+            openFragment(SignInFragment(), R.id.fragment_container)
         }
 
         binding.buttonSignup.setOnClickListener {
-            replaceFragment(SignupFragment())
+            openFragment(SignupFragment(), R.id.fragment_container)
         }
     }
-
-    fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true) {
-        val transaction = supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-
-        if (addToBackStack) {
-            transaction.addToBackStack(null) // Geri dönülebilir bir yığın ekle
-        }
-
-        transaction.commit()
-    }
-
 }

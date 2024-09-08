@@ -7,6 +7,39 @@
     tools:context=".ui.HomeFragment"
     android:background="?backgroundColor">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacer_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageCity"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/adress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/spacer_8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/purple" />
+
+        <TextView
+            android:id="@+id/textCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacer_8"
+            android:background="@drawable/mini_button_background"
+            android:text="@string/city"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageCity"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
         android:id="@+id/recyclerViewHomeEvent"
         android:layout_width="match_parent"
@@ -14,6 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayoutCity"
         tools:listitem="@layout/item_event"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
@@ -23,9 +57,11 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:lottie_autoPlay="true"
+        android:foregroundGravity="center"
         app:lottie_fileName="eventsearch.json"
         app:lottie_loop="true"
         tools:ignore="MissingConstraints" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

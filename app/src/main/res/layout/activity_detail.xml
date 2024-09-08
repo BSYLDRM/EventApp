@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?backgroundColor"
-    tools:context=".ui.DetailActivity"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    tools:context=".ui.DetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:fillViewport="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -42,54 +42,11 @@
                 android:layout_marginTop="36dp"
                 android:background="@drawable/mini_button_background"
                 android:contentDescription="@string/back"
-                android:padding="@dimen/margin_8"
+                android:padding="@dimen/spacer_8"
                 android:src="@drawable/back"
                 app:layout_constraintStart_toStartOf="@id/imageViewActivity"
                 app:layout_constraintTop_toTopOf="@id/imageViewActivity"
                 app:tint="@color/white" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/light_gray"
-                app:cardCornerRadius="@dimen/spacer_16"
-                app:layout_constraintBottom_toBottomOf="@+id/iconBackImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iconBackImage"
-                card_view:contentPadding="@dimen/margin_8">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@string/city"
-                        android:src="@drawable/adress"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/purple" />
-
-                    <TextView
-                        android:id="@+id/textCity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_8"
-                        android:text="@string/default_city"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView2"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
 
             <ImageView
                 android:id="@+id/imageHeart"
@@ -98,18 +55,18 @@
                 android:layout_margin="@dimen/spacer_16"
                 android:background="@drawable/mini_button_background"
                 android:contentDescription="@string/add_favorite"
-                android:padding="@dimen/margin_8"
+                android:padding="@dimen/spacer_8"
                 android:src="@drawable/heart"
-                app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                app:layout_constraintBottom_toBottomOf="@+id/iconBackImage"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cardView2"
+                app:layout_constraintTop_toTopOf="@+id/iconBackImage"
                 app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/textActivityName"
                 android:layout_width="0dp"
-                android:layout_marginHorizontal="@dimen/spacer_16"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacer_16"
                 android:text="@string/default_artist"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                 app:layout_constraintBottom_toBottomOf="@+id/imageViewActivity"
@@ -128,12 +85,12 @@
                     android:id="@+id/cardViewDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    card_view:contentPadding="@dimen/spacer_16"
                     app:cardBackgroundColor="@color/light_gray"
-                    app:cardCornerRadius="@dimen/margin_8"
+                    app:cardCornerRadius="@dimen/spacer_8"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    card_view:contentPadding="@dimen/spacer_16">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -166,66 +123,129 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardViewTime"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    card_view:contentPadding="@dimen/spacer_16"
-                    app:cardBackgroundColor="@color/light_gray"
-                    app:cardCornerRadius="@dimen/margin_8"
-                    app:layout_constraintBottom_toTopOf="@+id/cardViewAdrees"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/cardViewCity"
                     app:layout_constraintTop_toBottomOf="@+id/cardViewDate">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewTime"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/light_gray"
+                        app:cardCornerRadius="@dimen/spacer_8"
+                        app:layout_constraintBottom_toTopOf="@+id/cardViewAdrees"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        card_view:contentPadding="@dimen/spacer_16">
 
-                        <ImageView
-                            android:id="@+id/imageTime"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="@dimen/spacer_16"
-                            android:contentDescription="@string/calender"
-                            android:src="@drawable/clock"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/purple" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/textTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/default_time"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                            app:layout_constraintBottom_toBottomOf="@+id/imageTime"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/imageTime" />
+                            <ImageView
+                                android:id="@+id/imageTime"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="@dimen/spacer_16"
+                                android:contentDescription="@string/calender"
+                                android:src="@drawable/clock"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/purple" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/textTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/default_time"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                app:layout_constraintBottom_toBottomOf="@+id/imageTime"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/imageTime" />
 
-                </androidx.cardview.widget.CardView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardViewTime" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewAdrees"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/light_gray"
+                        app:cardCornerRadius="@dimen/spacer_8"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view"
+                        card_view:contentPadding="@dimen/spacer_16">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imageViewAdrees"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="@dimen/spacer_16"
+                                android:contentDescription="@string/calender"
+                                android:src="@drawable/adress"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/purple" />
+
+                            <TextView
+                                android:id="@+id/textAdrees"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/spacer_16"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/default_city"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                app:layout_constraintBottom_toBottomOf="@+id/imageViewAdrees"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewAdrees"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewAdrees" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardViewAdrees"
+                    android:id="@+id/cardViewCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    card_view:contentPadding="@dimen/spacer_16"
                     app:cardBackgroundColor="@color/light_gray"
-                    app:cardCornerRadius="@dimen/margin_8"
+                    app:cardCornerRadius="@dimen/spacer_8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    card_view:contentPadding="@dimen/spacer_16">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/imageViewAdrees"
+                            android:id="@+id/imageViewCity"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="@dimen/spacer_16"
@@ -237,7 +257,7 @@
                             app:tint="@color/purple" />
 
                         <TextView
-                            android:id="@+id/textAdrees"
+                            android:id="@+id/textCity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/spacer_16"
@@ -246,10 +266,10 @@
                             android:text="@string/default_city"
                             android:textAlignment="center"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                            app:layout_constraintBottom_toBottomOf="@+id/imageViewAdrees"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageViewCity"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewAdrees"
-                            app:layout_constraintTop_toTopOf="@+id/imageViewAdrees" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageViewCity" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -280,7 +300,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacer_16"
                 android:background="@drawable/button_background"
-                android:padding="@dimen/margin_8"
+                android:padding="@dimen/spacer_8"
                 android:text="@string/buy_ticket"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -292,4 +312,3 @@
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

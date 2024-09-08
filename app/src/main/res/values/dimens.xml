@@ -5,6 +5,6 @@
     <dimen name="spacer_48">48dp</dimen>
     <dimen name="spacer_24">24dp</dimen>
     <dimen name="margin_12">12dp</dimen>
-    <dimen name="margin_8">8dp</dimen>
+    <dimen name="spacer_8">8dp</dimen>
     <dimen name="spacer_32">32dp</dimen>
 </resources>

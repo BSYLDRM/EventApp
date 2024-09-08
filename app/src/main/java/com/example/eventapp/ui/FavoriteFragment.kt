@@ -9,10 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentFavoriteBinding
+import com.example.eventapp.extension.Constants
+import com.example.eventapp.service.dataclass.Event
 import com.example.eventapp.viewmodel.FavoriteViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+
 class FavoriteFragment : Fragment() {
+
     private lateinit var binding: FragmentFavoriteBinding
     private val viewModel: FavoriteViewModel by viewModels()
     private lateinit var adapter: EventsAdapter
@@ -23,18 +27,24 @@ class FavoriteFragment : Fragment() {
     ): View {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
 
-        setupRecyclerView()
         observeViewModel()
         fetchFavoritesFromFirebase()
         setupSwipeRefresh()
-        showLoadingAnimation(true)
         fetchFavoritesFromFirebase()
 
         return binding.root
     }
 
-    private fun setupRecyclerView() {
-        adapter = EventsAdapter()
+    private fun setupRecyclerView(events: List<Event>) {
+        adapter = EventsAdapter(
+            eventsList = events,
+            isFavorite = { eventId, callback ->
+                viewModel.isFavorite(eventId, callback)
+            },
+            toggleFavorite = { event, callback ->
+                viewModel.toggleFavorite(event, callback)
+            }
+        )
         binding.recyclerFavorite.adapter = adapter
         binding.recyclerFavorite.layoutManager = LinearLayoutManager(requireContext())
 
@@ -42,8 +52,7 @@ class FavoriteFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.favoriteEvents.observe(viewLifecycleOwner) { events ->
-            adapter.submitList(events)
-            showLoadingAnimation(false)
+            setupRecyclerView(events)
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -60,28 +69,12 @@ class FavoriteFragment : Fragment() {
                 val favoriteIds = documents.map { it.id }
                 viewModel.fetchFavoriteEvents(favoriteIds)
             }
-            .addOnFailureListener {
-                // Verileri yükleme başarısız olduysa animasyonu gizle
-                showLoadingAnimation(false)
-            }
+
     }
+
     private fun setupSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             fetchFavoritesFromFirebase()
         }
-    }
-    private fun showLoadingAnimation(show: Boolean) {
-        if (show) {
-            // Lottie animasyonunu göster
-            binding.lottieAnimationView.visibility = View.VISIBLE
-        } else {
-            // Lottie animasyonunu gizle
-            binding.lottieAnimationView.visibility = View.GONE
-        }
-    }
-    object Constants {
-        const val USERS_COLLECTION = "users"
-        const val FAVORITES_COLLECTION = "favorites"
-        const val EVENT_ID_KEY = "event_id"
     }
 }
