@@ -8,8 +8,10 @@ import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.example.eventapp.R
 import com.example.eventapp.databinding.ActivityDetailBinding
+import com.example.eventapp.extension.Constants
 import com.example.eventapp.extension.Constants.EVENT_ID
 import com.example.eventapp.extension.Constants.FAVORITES_COLLECTION
 import com.example.eventapp.extension.Constants.USERS_COLLECTION
@@ -28,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private val viewModel: DetailViewModel by viewModels()
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
     private lateinit var btnUrl: Button
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -41,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         btnUrl = findViewById(R.id.btnUrl)
 
-        intent?.getStringExtra("event_id")?.let { eventId ->
+        intent?.getStringExtra(Constants.EVENT_ID_KEY)?.let { eventId ->
             fetchEventDetails(eventId)
             checkIfFavorite(eventId)
         }
@@ -51,7 +53,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.imageHeart.setOnClickListener {
-            intent?.getStringExtra("event_id")?.let { eventId ->
+            intent?.getStringExtra(Constants.EVENT_ID_KEY)?.let { eventId ->
                 toggleFavorite(eventId)
             }
         }
@@ -65,40 +67,58 @@ class DetailActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.eventDetails.observe(this) { event ->
-                event?.let {
-                    with(binding) {
-                        textActivityName.text = it.name
-                        textAdrees.text = it.embedded.venues.firstOrNull()?.address?.line1
-                        textDate.text = it.dates.start.localDate
-                        textCity.text = it.embedded.venues.firstOrNull()?.city?.name
-                        textTime.text = it.dates.start.localTime
-                        imageViewActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_4_3))
+            event?.let { it ->
+                with(binding) {
+                    textActivityName.text = it.name
+                    textAdrees.text = it.embedded.venues.firstOrNull()?.address?.line1 ?: "UNKNOWN"
+                    textDate.text = it.dates.start.localDate
+                    textCity.text = it.embedded.venues.firstOrNull()?.city?.name ?: "UNKNOWN"
+                    textTime.text = it.dates.start.localTime 
+                    imageViewActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_4_3))
 
-                        it.url.let { url ->
-                            btnUrl.setOnClickListener {
-                                openUrl(url)
+                    it.url.let { url ->
+                        btnUrl.setOnClickListener {
+                            openUrl(url)
+                        }
+                    } ?: run {
+                        btnUrl.isVisible = false // Hide button if URL is null
+                    }
+                }
+
+                val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+                    ?: SupportMapFragment.newInstance().also {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.map, it)
+                            .commit()
+                    }
+
+                it.embedded.venues.firstOrNull()?.location?.let { location ->
+                    // Ensure that location values are not null
+                    val latitudeStr = location.latitude
+                    val longitudeStr = location.longitude
+                    if (latitudeStr.isNotEmpty() && longitudeStr.isNotEmpty()) {
+                        try {
+                            val latitude = latitudeStr.toDouble()
+                            val longitude = longitudeStr.toDouble()
+                            mapFragment.getMapAsync { googleMap ->
+                                map = googleMap
+                                val locationVenue = LatLng(latitude, longitude)
+                                map?.addMarker(
+                                    MarkerOptions().position(locationVenue).title("Event Location")
+                                )
+                                map?.moveCamera(CameraUpdateFactory.newLatLngZoom(locationVenue, 12f))
                             }
+                        } catch (e: NumberFormatException) {
+                            Log.e("DetailActivity", "Invalid location data format", e)
+                            showDefaultMap()
                         }
+                    } else {
+                        // Handle case where latitude or longitude is null or empty
+                        showDefaultMap()
                     }
-
-                val mapFragment =
-                    supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
-                        ?: SupportMapFragment.newInstance().also {
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.map, it)
-                                .commit()
-                        }
-
-                mapFragment.getMapAsync { googleMap ->
-                    map = googleMap
-                    it.embedded.venues.firstOrNull()?.location?.let { location ->
-                        val locationVenue =
-                            LatLng(location.latitude.toDouble(), location.longitude.toDouble())
-                        map.addMarker(
-                            MarkerOptions().position(locationVenue).title("Event Location")
-                        )
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(locationVenue, 12f))
-                    }
+                } ?: run {
+                    // Handle case where location data is null
+                    showDefaultMap()
                 }
             }
         }
@@ -111,6 +131,25 @@ class DetailActivity : AppCompatActivity() {
             error?.let {
                 Log.e("DetailActivity", "Error: $it")
             }
+        }
+    }
+
+    private fun showDefaultMap() {
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+            ?: SupportMapFragment.newInstance().also {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.map, it)
+                    .commit()
+            }
+
+        mapFragment.getMapAsync { googleMap ->
+            map = googleMap
+            googleMap.clear() // Clear any existing markers
+            val defaultLocation = LatLng(0.0, 0.0) // Default location, can be any place
+            googleMap.addMarker(
+                MarkerOptions().position(defaultLocation).title("No Event Location")
+            )
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 1f))
         }
     }
 
