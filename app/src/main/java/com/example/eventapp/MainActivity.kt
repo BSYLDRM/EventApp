@@ -12,6 +12,7 @@ import com.example.eventapp.databinding.ActivityMainBinding
 import com.example.eventapp.login.LoginScreen
 import com.example.eventapp.ui.FavoriteFragment
 import com.example.eventapp.ui.HomeFragment
+import com.example.eventapp.ui.MapsFragment
 import com.example.eventapp.ui.SearchFragment
 import com.example.eventapp.ui.SettingFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -40,14 +41,18 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 1 -> {
-                    openFragment(R.id.mainFragmentContainer, SearchFragment())
+                    openFragment(R.id.mainFragmentContainer, MapsFragment())
                 }
 
                 2 -> {
-                    openFragment(R.id.mainFragmentContainer, FavoriteFragment())
+                    openFragment(R.id.mainFragmentContainer, SearchFragment())
                 }
 
                 3 -> {
+                    openFragment(R.id.mainFragmentContainer, FavoriteFragment())
+                }
+
+                4 -> {
                     openFragment(R.id.mainFragmentContainer, SettingFragment())
                 }
 
