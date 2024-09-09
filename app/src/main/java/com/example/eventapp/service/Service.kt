@@ -18,12 +18,12 @@ interface Service {
        @Query("name") name: String? = null
     ): EventsResponse
 
-    @GET("events/{id}.json")
+    @GET(eventDetails)
     suspend fun getEventDetails(
         @Path("id") eventId: String
     ): Event
 
-    @GET("geocode/json")
+    @GET(geocoding)
     suspend fun getCityFromLatLng(
         @Query("latlng") latLng: String,
         @Query("key") apiKey: String
@@ -31,6 +31,8 @@ interface Service {
 
 }
 const val searchEvent = "events.json"
+const val eventDetails = "events/{id}.json"
+const val geocoding = "geocode/json"
 
 
 

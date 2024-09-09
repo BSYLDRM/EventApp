@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/spacer_8"
     android:background="?backgroundColor"
+    android:padding="@dimen/spacer_8"
     tools:context=".ui.SearchFragment">
 
     <EditText
@@ -15,14 +15,14 @@
         android:layout_marginStart="@dimen/spacer_24"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="@dimen/spacer_24"
-        android:drawableEnd="@drawable/baseline_search_24"
         android:background="@drawable/mini_button_background"
+        android:drawableEnd="@drawable/baseline_search_24"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/edit_search"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:inputType="text"
         android:padding="@dimen/spacer_8"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
         app:layout_constraintEnd_toEndOf="parent"

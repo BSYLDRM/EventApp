@@ -18,14 +18,13 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = eventApiService.getEvents(city = city)
-                if (response.embedded?.events.isNullOrEmpty()) {
+                if (response.embedded.events.isEmpty()) {
                     searchEventsByCountry(countryCode)
                 } else {
                     _events.postValue(response.embedded.events)
                 }
             } catch (e: Exception) {
                 _events.postValue(emptyList())
-                Log.e("HomeViewModel", "Error fetching events by city: ${e.message}")
             }
         }
     }
@@ -37,7 +36,6 @@ class HomeViewModel : ViewModel() {
                 _events.postValue(response.embedded.events)
             } catch (e: Exception) {
                 _events.postValue(emptyList())
-                Log.e("HomeViewModel", "Error fetching events by country: ${e.message}")
             }
         }
     }

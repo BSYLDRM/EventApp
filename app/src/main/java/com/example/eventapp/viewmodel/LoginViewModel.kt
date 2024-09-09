@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 class LoginViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -24,7 +25,7 @@ class LoginViewModel : ViewModel() {
                         if (task.isSuccessful) {
                             _loginStatus.postValue(true)
                         } else {
-                            _errorMessage.postValue("Kullanıcı adı veya şifre yanlış")
+                            _errorMessage.postValue("Failed to log in")
                             _loginStatus.postValue(false)
                         }
                     }
@@ -34,9 +35,8 @@ class LoginViewModel : ViewModel() {
                 }
             }
         } else {
-            _errorMessage.postValue("Lütfen e-posta ve şifre girin")
+            _errorMessage.postValue("Please enter email and password")
             _loginStatus.postValue(false)
         }
     }
 }
-

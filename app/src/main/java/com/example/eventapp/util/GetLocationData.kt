@@ -1,4 +1,4 @@
-package com.example.eventapp.extension
+package com.example.eventapp.util
 
 import android.util.Log
 import com.example.eventapp.BuildConfig

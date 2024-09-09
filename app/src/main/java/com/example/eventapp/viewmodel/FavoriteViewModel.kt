@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventapp.extension.Constants.EVENT_ID
-import com.example.eventapp.extension.Constants.FAVORITES_COLLECTION
-import com.example.eventapp.extension.Constants.USERS_COLLECTION
+import com.example.eventapp.util.Constants.EVENT_ID
+import com.example.eventapp.util.Constants.FAVORITES_COLLECTION
+import com.example.eventapp.util.Constants.USERS_COLLECTION
 import com.example.eventapp.service.retrofit.RetrofitInstance
 import com.example.eventapp.service.dataclass.Event
+import com.example.eventapp.util.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
@@ -31,13 +32,12 @@ class FavoriteViewModel : ViewModel(){
                     eventApiService.getEventDetails(id)
                 }
                 _favoriteEvents.value = events
-            } catch (e: Exception) {
+            } catch (_: Exception) {
 
             }
         }
     }
 
-    // Check if an event is in favorites
     fun isFavorite(eventId: String, callback: (Boolean) -> Unit) {
         val userId = auth.currentUser?.uid ?: return
         val favoriteRef = firestore.collection(USERS_COLLECTION).document(userId)
@@ -56,13 +56,28 @@ class FavoriteViewModel : ViewModel(){
         favoriteRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
                 favoriteRef.delete().addOnSuccessListener {
-                    callback(false) // Removed from favorites
+                    callback(false)
+                    fetchFavoritesFromFirebase()
                 }
             } else {
                 favoriteRef.set(mapOf(EVENT_ID to event.id)).addOnSuccessListener {
-                    callback(true) // Added to favorites
+                    callback(true)
+                    fetchFavoritesFromFirebase()
                 }
             }
         }
     }
-}
+
+  fun fetchFavoritesFromFirebase() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val firestore = FirebaseFirestore.getInstance()
+
+        firestore.collection(Constants.USERS_COLLECTION)
+            .document(userId)
+            .collection(Constants.FAVORITES_COLLECTION)
+            .get()
+            .addOnSuccessListener { documents ->
+                val favoriteIds = documents.map { it.id }
+                fetchFavoriteEvents(favoriteIds)
+            }
+    }}

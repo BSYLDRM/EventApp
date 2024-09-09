@@ -22,7 +22,7 @@
             android:value="@string/MAP_API_KEYS" />
 
         <activity
-            android:name=".ui.DetailActivity"
+            android:name=".DetailActivity"
             android:exported="false" />
         <activity
             android:name=".login.LoginScreen"

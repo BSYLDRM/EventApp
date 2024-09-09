@@ -5,28 +5,29 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginScreen"
-    android:background="?backgroundColor">
+    android:background="?backgroundColor"
+    tools:context=".login.LoginScreen">
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_animation_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:tint="@color/purple"
         android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_fileName="concerts.json"
-        android:foregroundGravity="center"
-        android:tint="@color/purple"
         app:lottie_loop="true"
-        tools:ignore="MissingConstraints"/>
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacer_24"
+        android:background="@drawable/mini_button_background"
         android:text="@string/btn_sign_in"
         app:layout_constraintBottom_toTopOf="@id/buttonSignup"
-        android:background="@drawable/mini_button_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -34,18 +35,18 @@
         android:id="@+id/buttonSignup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacer_24"
         android:layout_marginStart="@dimen/spacer_24"
+        android:layout_marginEnd="@dimen/spacer_24"
         android:layout_marginBottom="@dimen/spacer_48"
+        android:background="@drawable/mini_button_background"
         android:text="@string/btn_signup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-       android:background="@drawable/mini_button_background"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
+
     <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_container"/>
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

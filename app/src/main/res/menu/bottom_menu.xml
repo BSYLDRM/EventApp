@@ -4,21 +4,21 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/home"
-        android:title="Ana Sayfa" />
+        android:title="@string/menu_home" />
     <item
         android:id="@+id/nav_map"
         android:icon="@drawable/adress"
-        android:title="Harita" />
+        android:title="@string/menu_map" />
     <item
         android:id="@+id/nav_filter"
         android:icon="@drawable/loupe"
-        android:title="Filtrele" />
+        android:title="@string/menu_search" />
     <item
         android:id="@+id/nav_favorite"
         android:icon="@drawable/heart"
-        android:title="Favori" />
+        android:title="@string/menu_favori" />
     <item
         android:id="@+id/nav_settings"
         android:icon="@drawable/settings"
-        android:title="Ayarlar" />
+        android:title="@string/menu_setting" />
 </menu>

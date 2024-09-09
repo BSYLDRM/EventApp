@@ -1,4 +1,4 @@
-package com.example.eventapp.extension
+package com.example.eventapp.util
 
 object Constants {
     const val USERS_COLLECTION = "users"
@@ -7,4 +7,7 @@ object Constants {
     const val EVENT_ID="id"
     const val LOCATION ="administrative_area_level_1"
     const val COUNTRY ="country"
+    const val FRAGMENT_TO_OPEN = "fragment_to_open"
+    const val HOME_FRAGMENT = "home"
+    const val TOAST_MESSAGE_ERROR = "Eror"
 }

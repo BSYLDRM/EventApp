@@ -1,4 +1,4 @@
-package com.example.eventapp.extension
+package com.example.eventapp.util
 
 import android.Manifest
 import android.content.Context
@@ -21,7 +21,6 @@ class LocationHelper(private val context: Context, private val callback: (latitu
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Konum izni yoksa işlemi burada yapabilirsiniz.
             return
         }
 
@@ -31,12 +30,10 @@ class LocationHelper(private val context: Context, private val callback: (latitu
                     callback(location.latitude, location.longitude)
                 } else {
                     Log.d("LocationHelper", "Location not found")
-                    // Konum bulunamadığında yapılacak işlemleri burada yapabilirsiniz.
                 }
             }
             .addOnFailureListener { exception ->
                 Log.e("LocationHelper", "Error getting location", exception)
-                // Hata durumunu burada işleyebilirsiniz.
             }
     }
 }

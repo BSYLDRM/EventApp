@@ -13,6 +13,7 @@ import com.example.eventapp.MainActivity
 import com.example.eventapp.R
 import com.example.eventapp.databinding.FragmentSignupBinding
 import com.example.eventapp.ui.HomeFragment
+import com.example.eventapp.util.Constants
 import com.example.eventapp.viewmodel.SignupViewModel
 
 class SignupFragment : Fragment() {
@@ -49,17 +50,17 @@ class SignupFragment : Fragment() {
         })
     }
     private fun navigateToHome() {
-        // Mevcut aktiviteyi bitir
+
         requireActivity().finish()
 
-        // MainActivity'yi başlat ve HomeFragment'ı yerleştir
         val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.putExtra("fragment_to_open", "home") // Gerekirse veri ekleyin
+        intent.putExtra(Constants.FRAGMENT_TO_OPEN,Constants.HOME_FRAGMENT)
         startActivity(intent)
     }
 
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        showToast(Constants.TOAST_MESSAGE_ERROR)
     }
 }

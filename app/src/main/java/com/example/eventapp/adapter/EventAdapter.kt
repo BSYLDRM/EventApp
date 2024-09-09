@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eventapp.R
 import com.example.eventapp.databinding.ItemEventBinding
-import com.example.eventapp.extension.Constants.EVENT_ID_KEY
+import com.example.eventapp.util.Constants.EVENT_ID_KEY
 import com.example.eventapp.extension.ImageEnum
 import com.example.eventapp.extension.getImageByRatio
 import com.example.eventapp.extension.loadImage
 import com.example.eventapp.service.dataclass.Event
-import com.example.eventapp.ui.DetailActivity
+import com.example.eventapp.DetailActivity
 
 class EventsAdapter(
     private var eventsList: List<Event>,

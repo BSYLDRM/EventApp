@@ -2,11 +2,7 @@ package com.example.eventapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.eventapp.databinding.ActivityMainBinding
 import com.example.eventapp.login.LoginScreen
@@ -16,8 +12,6 @@ import com.example.eventapp.ui.MapsFragment
 import com.example.eventapp.ui.SearchFragment
 import com.example.eventapp.ui.SettingFragment
 import com.google.firebase.auth.FirebaseAuth
-import me.ibrahimsn.lib.OnItemReselectedListener
-import me.ibrahimsn.lib.OnItemSelectedListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         }
         val fragmentToOpen = intent.getStringExtra("fragment_to_open")
     }
-
 
     private fun openFragment(container: Int, fragment: Fragment) {
 

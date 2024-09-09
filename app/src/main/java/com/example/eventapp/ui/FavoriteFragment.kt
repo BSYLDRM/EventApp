@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentFavoriteBinding
-import com.example.eventapp.extension.Constants
+import com.example.eventapp.util.Constants
 import com.example.eventapp.service.dataclass.Event
 import com.example.eventapp.viewmodel.FavoriteViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -42,12 +42,17 @@ class FavoriteFragment : Fragment() {
                 viewModel.isFavorite(eventId, callback)
             },
             toggleFavorite = { event, callback ->
-                viewModel.toggleFavorite(event, callback)
+                viewModel.toggleFavorite(event) { isFav ->
+                    callback(isFav)
+                    if (!isFav) {
+
+                        fetchFavoritesFromFirebase()
+                    }
+                }
             }
         )
         binding.recyclerFavorite.adapter = adapter
         binding.recyclerFavorite.layoutManager = LinearLayoutManager(requireContext())
-
     }
 
     private fun observeViewModel() {

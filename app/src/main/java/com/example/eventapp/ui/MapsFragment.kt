@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.eventapp.R
-import com.example.eventapp.extension.GetLocationData
-import com.example.eventapp.extension.LocationHelper
+import com.example.eventapp.util.GetLocationData
+import com.example.eventapp.util.LocationHelper
 import com.example.eventapp.viewmodel.HomeViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -119,7 +119,7 @@ class MapsFragment : Fragment() {
                     googleMap.addMarker(
                         MarkerOptions().position(userLocation).title("Current Location")
                     )
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
+                    //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
                 }
             }
         }

@@ -25,7 +25,7 @@ class SignupViewModel: ViewModel() {
                         if (task.isSuccessful) {
                             _signupStatus.postValue(true)
                         } else {
-                            _errorMessage.postValue("Kullanıcı oluşturulamadı")
+                            _errorMessage.postValue("Failed to create user")
                             _signupStatus.postValue(false)
                         }
                     }
@@ -35,7 +35,7 @@ class SignupViewModel: ViewModel() {
                 }
             }
         } else {
-            _errorMessage.postValue("Lütfen e-posta ve şifre girin")
+            _errorMessage.postValue("Please enter email and password")
             _signupStatus.postValue(false)
         }
     }

@@ -27,8 +27,6 @@ data class Event(
     val images: List<Image>,
     @SerializedName("dates")
     val dates: Dates,
-    @SerializedName("promoter")
-    val promoter: Promoter,
     @SerializedName("classifications")
     val classifications: List<Classification>,
     @SerializedName("_embedded")
@@ -99,10 +97,6 @@ data class Image(
     val width: Int
 )
 
-data class Promoter(
-    @SerializedName("description")
-    val description: String
-)
 
 data class Venue(
     @SerializedName("name")
@@ -123,8 +117,6 @@ data class Venue(
     val timezone: String,
     @SerializedName("city")
     val city: City,
-    @SerializedName("state")
-    val state: State,
     @SerializedName("country")
     val country: Country,
     @SerializedName("address")
@@ -169,12 +161,6 @@ data class Location(
     val latitude: String
 )
 
-data class State(
-    @SerializedName("name")
-    val name: String,
-    @SerializedName("stateCode")
-    val stateCode: String
-)
 
 enum class VenueType(val value: String) {
     @SerializedName("venue")

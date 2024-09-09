@@ -1,4 +1,4 @@
-package com.example.eventapp.ui
+package com.example.eventapp
 
 import android.content.Intent
 import android.net.Uri
@@ -8,13 +8,11 @@ import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
-import com.example.eventapp.R
 import com.example.eventapp.databinding.ActivityDetailBinding
-import com.example.eventapp.extension.Constants
-import com.example.eventapp.extension.Constants.EVENT_ID
-import com.example.eventapp.extension.Constants.FAVORITES_COLLECTION
-import com.example.eventapp.extension.Constants.USERS_COLLECTION
+import com.example.eventapp.util.Constants
+import com.example.eventapp.util.Constants.EVENT_ID
+import com.example.eventapp.util.Constants.FAVORITES_COLLECTION
+import com.example.eventapp.util.Constants.USERS_COLLECTION
 import com.example.eventapp.extension.ImageEnum
 import com.example.eventapp.extension.getImageByRatio
 import com.example.eventapp.extension.loadImage
@@ -73,27 +71,25 @@ class DetailActivity : AppCompatActivity() {
                     textAdrees.text = it.embedded.venues.firstOrNull()?.address?.line1 ?: "UNKNOWN"
                     textDate.text = it.dates.start.localDate
                     textCity.text = it.embedded.venues.firstOrNull()?.city?.name ?: "UNKNOWN"
-                    textTime.text = it.dates.start.localTime 
+                    textTime.text = it.dates.start.localTime
                     imageViewActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_4_3))
 
                     it.url.let { url ->
                         btnUrl.setOnClickListener {
                             openUrl(url)
                         }
-                    } ?: run {
-                        btnUrl.isVisible = false // Hide button if URL is null
                     }
                 }
 
-                val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
-                    ?: SupportMapFragment.newInstance().also {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.map, it)
-                            .commit()
-                    }
+                val mapFragment =
+                    supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+                        ?: SupportMapFragment.newInstance().also {
+                            supportFragmentManager.beginTransaction()
+                                .replace(R.id.map, it)
+                                .commit()
+                        }
 
                 it.embedded.venues.firstOrNull()?.location?.let { location ->
-                    // Ensure that location values are not null
                     val latitudeStr = location.latitude
                     val longitudeStr = location.longitude
                     if (latitudeStr.isNotEmpty() && longitudeStr.isNotEmpty()) {
@@ -106,25 +102,28 @@ class DetailActivity : AppCompatActivity() {
                                 map?.addMarker(
                                     MarkerOptions().position(locationVenue).title("Event Location")
                                 )
-                                map?.moveCamera(CameraUpdateFactory.newLatLngZoom(locationVenue, 12f))
+                                map?.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        locationVenue,
+                                        12f
+                                    )
+                                )
                             }
                         } catch (e: NumberFormatException) {
                             Log.e("DetailActivity", "Invalid location data format", e)
                             showDefaultMap()
                         }
                     } else {
-                        // Handle case where latitude or longitude is null or empty
                         showDefaultMap()
                     }
                 } ?: run {
-                    // Handle case where location data is null
                     showDefaultMap()
                 }
             }
         }
 
         viewModel.loading.observe(this) {
-            // Handle loading state if necessary
+
         }
 
         viewModel.error.observe(this) { error ->
@@ -144,8 +143,8 @@ class DetailActivity : AppCompatActivity() {
 
         mapFragment.getMapAsync { googleMap ->
             map = googleMap
-            googleMap.clear() // Clear any existing markers
-            val defaultLocation = LatLng(0.0, 0.0) // Default location, can be any place
+            googleMap.clear()
+            val defaultLocation = LatLng(0.0, 0.0)
             googleMap.addMarker(
                 MarkerOptions().position(defaultLocation).title("No Event Location")
             )

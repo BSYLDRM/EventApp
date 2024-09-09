@@ -6,18 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.example.eventapp.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.eventapp.databinding.FragmentSettingBinding
 import com.example.eventapp.login.LoginScreen
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-
+import com.example.eventapp.viewmodel.SettingViewModel
 
 class SettingFragment : Fragment() {
+
     private lateinit var binding: FragmentSettingBinding
-    private lateinit var auth: FirebaseAuth
+    private val viewModel: SettingViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,23 +28,25 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        auth = Firebase.auth
+        viewModel.toastMessage.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            if (message == "Logged out successfully" || message == "Account deleted successfully") {
+                navigateToLogin()
+            }
+        })
 
-        val textOut = view.findViewById<TextView>(R.id.textOut)
-        textOut.setOnClickListener {
-            logout()
+        binding.textOut.setOnClickListener {
+            viewModel.logout()
+        }
+
+        binding.textDelete.setOnClickListener {
+            viewModel.deleteUser()
         }
     }
 
-    private fun logout() {
-        auth.signOut()
-        navigateToLoginScreen()
-    }
-
-    private fun navigateToLoginScreen() {
+    private fun navigateToLogin() {
         val intent = Intent(requireContext(), LoginScreen::class.java)
         startActivity(intent)
-        activity?.finish()
+        requireActivity().finish()
     }
-
 }
