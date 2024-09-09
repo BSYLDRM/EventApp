@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,20 +7,22 @@
     android:background="?backgroundColor"
     tools:context=".ui.HomeFragment">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutCity"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacer_16"
+        android:layout_marginTop="@dimen/spacer_8"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/imageCity"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="@dimen/spacer_8"
+            android:layout_width="@dimen/spacer_16"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp"
             android:contentDescription="@string/description_image_city"
             android:src="@drawable/adress"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,44 +34,40 @@
             android:id="@+id/textCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacer_8"
             android:background="@drawable/mini_button_background"
-            android:padding="@dimen/spacer_8"
             android:text="@string/city"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/white"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageCity"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacer_24"
-            android:layout_marginEnd="@dimen/spacer_24"
             android:autofillHints=""
             android:background="@drawable/mini_button_background"
             android:drawableEnd="@drawable/baseline_search_24"
             android:ems="10"
             android:gravity="center"
-            android:hint="@string/edit_search"
+            android:hint="@string/home_event_name"
             android:inputType="text"
-            android:padding="@dimen/spacer_8"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@color/white"
             android:textColorHint="@color/hint"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/spacer_24"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/textCity"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
         android:id="@+id/recyclerViewHomeEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacer_24"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,11 +81,11 @@
         android:layout_height="match_parent"
         android:background="?backgroundColor"
         android:foregroundGravity="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="@color/purple"
         app:lottie_fileName="eventsearch.json"

@@ -38,4 +38,15 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
+
+    fun searchEventsByName(name: String?) {
+        viewModelScope.launch {
+            _events.value?.let { events ->
+                val filteredEvents = events.filter { event ->
+                    event.name.contains(name ?: "", ignoreCase = true)
+                }
+                _events.postValue(filteredEvents)
+            }
+        }
+    }
 }
