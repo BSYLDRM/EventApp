@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.eventapp.MainActivity
 import com.example.eventapp.databinding.FragmentSignInBinding
 import com.example.eventapp.util.Constants
@@ -38,15 +37,13 @@ class SignInFragment : Fragment() {
             }
         }
 
-        loginViewModel.loginStatus.observe(viewLifecycleOwner, Observer { isLoggedIn ->
-            if (isLoggedIn) {
-                navigateToHome()
-            }
-        })
+        loginViewModel.loginStatus.observe(viewLifecycleOwner) { isLoggedIn ->
+            if (isLoggedIn) navigateToHome()
+        }
 
-        loginViewModel.errorMessage.observe(viewLifecycleOwner, Observer { message ->
+        loginViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             message?.let { showToast(it) }
-        })
+        }
     }
 
     private fun navigateToHome() {

@@ -2,11 +2,11 @@ package com.example.eventapp.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.eventapp.databinding.FragmentSettingBinding
@@ -28,19 +28,22 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.toastMessage.observe(viewLifecycleOwner, Observer { message ->
+
+        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             if (message == "Logged out successfully" || message == "Account deleted successfully") {
                 navigateToLogin()
             }
-        })
-
-        binding.textOut.setOnClickListener {
-            viewModel.logout()
         }
 
-        binding.textDelete.setOnClickListener {
-            viewModel.deleteUser()
+        with(binding) {
+            textOut.setOnClickListener {
+                viewModel.logout()
+            }
+
+            textDelete.setOnClickListener {
+                viewModel.deleteUser()
+            }
         }
     }
 
