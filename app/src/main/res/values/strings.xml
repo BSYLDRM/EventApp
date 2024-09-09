@@ -32,11 +32,12 @@
     <string name="menu_home">Home</string>
     <string name="menu_map">Map</string>
     <string name="menu_search">Search</string>
-    <string name="menu_favori">Favor</string>
+    <string name="menu_favorite">Favorite</string>
     <string name="menu_setting">Setting</string>
     <string name="signup">Signup</string>
     <string name="account">account</string>
     <string name="error_user_creation_failed">Failed to create user</string>
     <string name="error_fill_email_password">Please enter email and password</string>
     <string name="btn_edit_profile">Edit Profile</string>
+    <string name="description_image_city">image_city</string>
 </resources>

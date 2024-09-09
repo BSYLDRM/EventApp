@@ -100,7 +100,7 @@ class DetailActivity : AppCompatActivity() {
                                 map = googleMap
                                 val locationVenue = LatLng(latitude, longitude)
                                 map?.addMarker(
-                                    MarkerOptions().position(locationVenue).title("Event Location")
+                                    MarkerOptions().position(locationVenue).title(it.name)
                                 )
                                 map?.moveCamera(
                                     CameraUpdateFactory.newLatLngZoom(
@@ -132,6 +132,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun showDefaultMap() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
@@ -171,13 +172,11 @@ class DetailActivity : AppCompatActivity() {
         favoriteRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
                 favoriteRef.delete().addOnSuccessListener {
-                    isFavorite = false
-                    updateFavoriteIcon(isFavorite)
+                    updateFavoriteIcon(false)
                 }
             } else {
                 favoriteRef.set(mapOf(EVENT_ID to eventId)).addOnSuccessListener {
-                    isFavorite = true
-                    updateFavoriteIcon(isFavorite)
+                    updateFavoriteIcon(true)
                 }
             }
         }

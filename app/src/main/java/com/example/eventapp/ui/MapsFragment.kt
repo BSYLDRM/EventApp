@@ -119,7 +119,7 @@ class MapsFragment : Fragment() {
                     googleMap.addMarker(
                         MarkerOptions().position(userLocation).title("Current Location")
                     )
-                    //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
                 }
             }
         }
