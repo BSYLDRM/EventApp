@@ -1,16 +1,21 @@
 package com.example.eventapp.ui
 
+import android.content.Context
+import android.content.Intent
+import android.location.LocationManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.provider.Settings
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.eventapp.R
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentHomeBinding
 import com.example.eventapp.util.GetLocationData
@@ -18,6 +23,7 @@ import com.example.eventapp.util.LocationHelper
 import com.example.eventapp.util.PermissionUtil
 import com.example.eventapp.viewmodel.FavoriteViewModel
 import com.example.eventapp.viewmodel.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -34,6 +40,7 @@ class HomeFragment : Fragment() {
                 locationHelper.getLastKnownLocation()
             } else {
                 Log.d("HomeFragment", "Location permission denied")
+                showLocationPermissionDeniedSnackbar()
             }
         }
 
@@ -51,6 +58,7 @@ class HomeFragment : Fragment() {
         setupLocationHelper()
         checkLocationPermission()
         observeViewModel()
+        checkLocationServicesEnabled()
 
         binding.lottieAnimationView.visibility = View.VISIBLE
         binding.recyclerViewHomeEvent.visibility = View.GONE
@@ -61,9 +69,40 @@ class HomeFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.searchEventsByName(s.toString())
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    private fun checkLocationServicesEnabled() {
+        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        if (!isGpsEnabled && !isNetworkEnabled) {
+            showLocationSettingsSnackbar()
+        }
+    }
+
+    private fun showLocationSettingsSnackbar() {
+        Snackbar.make(binding.root,getString(R.string.location_services_disabled) , Snackbar.LENGTH_INDEFINITE)
+        .setAction(getString(R.string.open_settings)) {
+                openLocationSettings()
+            }
+            .show()
+    }
+
+    private fun openLocationSettings() {
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        startActivity(intent)
+    }
+
+
+    private fun showLocationPermissionDeniedSnackbar() {
+        Snackbar.make(binding.root,getString(R.string.location_permission_denied), Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.grant_permission)) {
+                checkLocationPermission()
+            }
+            .show()
     }
 
     private fun setupLocationHelper() {
@@ -113,7 +152,6 @@ class HomeFragment : Fragment() {
                     lottieAnimationView.visibility = View.GONE
                     recyclerViewHomeEvent.visibility = View.VISIBLE
                 } else {
-                    Log.d("HomeFragment", "No events found.")
                     lottieAnimationView.visibility = View.VISIBLE
                     recyclerViewHomeEvent.visibility = View.GONE
                 }
