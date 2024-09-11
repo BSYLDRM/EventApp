@@ -8,16 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.example.eventapp.DetailActivity
 import com.example.eventapp.R
+import com.example.eventapp.databinding.FragmentMapsBinding
 import com.example.eventapp.extension.ImageEnum
 import com.example.eventapp.extension.getImageByRatio
 import com.example.eventapp.extension.loadImage
@@ -32,7 +30,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +39,7 @@ class MapsFragment : Fragment() {
 
     private lateinit var locationHelper: LocationHelper
     private val viewModel: HomeViewModel by viewModels()
+    private lateinit var binding: FragmentMapsBinding
 
     private val callback = OnMapReadyCallback { googleMap ->
         setupLocationHelper(googleMap)
@@ -60,8 +58,9 @@ class MapsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_maps, container, false)
+    ): View {
+        binding = FragmentMapsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,7 +103,7 @@ class MapsFragment : Fragment() {
         viewModel.events.observe(viewLifecycleOwner) { events ->
             CoroutineScope(Dispatchers.IO).launch {
                 withContext(Dispatchers.Main) {
-                    googleMap.clear()  // Önceki marker'ları temizle
+                    googleMap.clear()
                     events.forEach { event ->
                         val venue = event.embedded.venues.firstOrNull()
                         val location = venue?.location?.let { loc ->
@@ -137,7 +136,6 @@ class MapsFragment : Fragment() {
                     )
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10f))
 
-
                     googleMap.setOnMarkerClickListener { marker ->
                         val markerEvent = marker.tag as? Event
                         if (markerEvent != null) {
@@ -151,22 +149,18 @@ class MapsFragment : Fragment() {
     }
 
     private fun showEventDetails(event: Event) {
-        val cardView = view?.findViewById<MaterialCardView>(R.id.markerDetailsCard)
-        cardView?.visibility = View.VISIBLE
+        binding.markerDetailsCard.visibility = View.VISIBLE
 
-        cardView?.setOnClickListener {
-            val intent = Intent(requireContext(), DetailActivity::class.java)
-            intent.putExtra(EVENT_ID_KEY, event.id)
+        binding.markerDetailsCard.setOnClickListener {
+            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                putExtra(EVENT_ID_KEY, event.id)
+            }
             requireContext().startActivity(intent)
         }
 
-        val imageView = view?.findViewById<ImageView>(R.id.imageActivity)
-        val textViewName = view?.findViewById<TextView>(R.id.textViewName)
-        val textViewCity = view?.findViewById<TextView>(R.id.textViewCity)
+        binding.textViewName.text = event.name
+        binding.textViewCity.text = event.embedded.venues.firstOrNull()?.city?.name ?: "Unknown City"
 
-        textViewName?.text = event.name
-        textViewCity?.text = event.embedded.venues.firstOrNull()?.city?.name ?: "Unknown City"
-
-        imageView?.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
+        binding.imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
     }
 }

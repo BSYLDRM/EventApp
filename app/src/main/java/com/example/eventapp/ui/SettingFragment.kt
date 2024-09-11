@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.eventapp.databinding.FragmentSettingBinding
 import com.example.eventapp.login.LoginScreen
 import com.example.eventapp.viewmodel.SettingViewModel

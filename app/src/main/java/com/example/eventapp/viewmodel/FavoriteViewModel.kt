@@ -9,7 +9,6 @@ import com.example.eventapp.util.Constants.FAVORITES_COLLECTION
 import com.example.eventapp.util.Constants.USERS_COLLECTION
 import com.example.eventapp.service.retrofit.RetrofitInstance
 import com.example.eventapp.service.dataclass.Event
-import com.example.eventapp.util.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch

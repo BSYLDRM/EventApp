@@ -13,16 +13,10 @@ class SearchViewModel : ViewModel() {
     val events: LiveData<EventsResponse> get() = _events
     private val eventApiService = RetrofitInstance.api
 
-
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
     fun searchEvents(city: String?) {
-        if ((city?.length ?: 0) < 3) {
-            _error.postValue(/* value = */ "Enter minimum 3 characters")
-            return
-        }
-
         viewModelScope.launch {
             try {
                 val response = eventApiService.getEvents(city = city)

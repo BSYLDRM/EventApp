@@ -19,7 +19,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
 
@@ -28,6 +27,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var adapter: EventsAdapter
     private var searchJob: Job? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,15 +57,15 @@ class SearchFragment : Fragment() {
                 val query = s.toString()
 
                 searchJob?.cancel()
-                if (query.length >= 3) {
-                    searchJob = lifecycleScope.launch {
-                        delay(500)
+                searchJob = lifecycleScope.launch {
+                    delay(500)
+                    if (query.isNotBlank()) {
                         viewModel.searchEvents(city = query)
+                    } else {
+                        adapter.submitList(emptyList())
+                        binding.lottieNoData.visibility = View.VISIBLE
+                        binding.recyclerSearch.visibility = View.GONE
                     }
-                } else {
-                    adapter.submitList(emptyList())
-                    binding.lottieNoData.visibility = View.VISIBLE
-                    binding.recyclerSearch.visibility = View.GONE
                 }
             }
 
@@ -93,6 +93,3 @@ class SearchFragment : Fragment() {
         }
     }
 }
-
-
-
