@@ -13,7 +13,7 @@ fun List<Image>.getImageByRatio(ratio: ImageEnum): String {
 }
 
 fun ImageView.loadImage(image: String) {
-    Glide.with(this.context).load(image).placeholder(R.drawable.app_logo).into(this)
+    Glide.with(this.context).load(image).placeholder(R.drawable.image).into(this)
 }
 
 fun Fragment.openFragment(fragment: Fragment, containerId: Int) {

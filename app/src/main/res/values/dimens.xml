@@ -10,4 +10,5 @@
     <dimen name="spacer_80">80dp</dimen>
     <dimen name="spacer_36">36dp</dimen>
     <dimen name="size_24">24sp</dimen>
+    <dimen name="spacer_100">100</dimen>
 </resources>

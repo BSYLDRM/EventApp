@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/spacer_80"
         android:layout_marginTop="@dimen/spacer_24"
+        android:contentDescription="@string/app_logo"
         android:src="@drawable/app_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +48,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -65,6 +67,7 @@
         android:textColor="@color/text"
         android:textColorHint="@color/hint"
         android:drawablePadding="@dimen/spacer_8"
+        tools:ignore="RtlHardcoded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextTextEmailAddress" />

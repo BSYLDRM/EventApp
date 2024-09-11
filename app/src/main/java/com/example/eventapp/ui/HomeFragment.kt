@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.provider.Settings
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -61,6 +62,7 @@ class HomeFragment : Fragment() {
         checkLocationServicesEnabled()
 
         binding.lottieAnimationView.visibility = View.VISIBLE
+        binding.lottieNoData.visibility = View.GONE
         binding.recyclerViewHomeEvent.visibility = View.GONE
     }
 
@@ -153,9 +155,11 @@ class HomeFragment : Fragment() {
                         set3DItem(true)
                     }
                     lottieAnimationView.visibility = View.GONE
+                    lottieNoData.visibility = View.GONE
                     recyclerViewHomeEvent.visibility = View.VISIBLE
                 } else {
-                    lottieAnimationView.visibility = View.VISIBLE
+                    lottieAnimationView.visibility = View.GONE
+                    lottieNoData.visibility = View.VISIBLE
                     recyclerViewHomeEvent.visibility = View.GONE
                 }
             }
@@ -163,7 +167,7 @@ class HomeFragment : Fragment() {
 
         viewModel.userName.observe(viewLifecycleOwner) { name ->
             val formattedName = name.replaceFirstChar { it.uppercase() }
-            binding.textName.text = getString(R.string.hi) + " " + formattedName
+            binding.textName.text = getString(R.string.hi_home, formattedName)
         }
     }
 }

@@ -25,7 +25,7 @@ class DetailViewModel : ViewModel() {
         _loading.value = true
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.getEventDetails(eventId)
+                val response = api.getEventDetails(eventId)
                 _eventDetails.value = response
                 _loading.value = false
             } catch (e: Exception) {

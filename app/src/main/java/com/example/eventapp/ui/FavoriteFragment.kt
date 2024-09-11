@@ -38,6 +38,7 @@ class FavoriteFragment : Fragment() {
     private fun setupRecyclerView(events: List<Event>) {
         adapter = EventsAdapter(
             eventsList = events,
+            isHome = false,
             isFavorite = { eventId, callback ->
                 viewModel.isFavorite(eventId, callback)
             },
@@ -59,6 +60,14 @@ class FavoriteFragment : Fragment() {
         viewModel.favoriteEvents.observe(viewLifecycleOwner) { events ->
             setupRecyclerView(events)
             binding.swipeRefreshLayout.isRefreshing = false
+
+            if (events.isEmpty()) {
+                binding.lottieNoData.visibility = View.VISIBLE
+                binding.recyclerFavorite.visibility = View.GONE
+            } else {
+                binding.lottieNoData.visibility = View.GONE
+                binding.recyclerFavorite.visibility = View.VISIBLE
+            }
         }
     }
 

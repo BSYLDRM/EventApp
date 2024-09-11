@@ -41,6 +41,7 @@ class SearchFragment : Fragment() {
 
         adapter = EventsAdapter(
             eventsList = emptyList(),
+            isHome = false,
             isFavorite = { eventId, callback ->
                 favoriteViewModel.isFavorite(eventId, callback)
             },
@@ -63,6 +64,8 @@ class SearchFragment : Fragment() {
                     }
                 } else {
                     adapter.submitList(emptyList())
+                    binding.lottieNoData.visibility = View.VISIBLE
+                    binding.recyclerSearch.visibility = View.GONE
                 }
             }
 
@@ -75,10 +78,13 @@ class SearchFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.events.observe(viewLifecycleOwner) { eventsResponse ->
-            if (eventsResponse?.embedded?.events != null) {
-                adapter.submitList(eventsResponse.embedded.events)
+            if (eventsResponse?.embedded == null) {
+                binding.lottieNoData.visibility = View.VISIBLE
+                binding.recyclerSearch.visibility = View.GONE
             } else {
-                adapter.submitList(emptyList())
+                binding.lottieNoData.visibility = View.GONE
+                binding.recyclerSearch.visibility = View.VISIBLE
+                adapter.submitList(eventsResponse.embedded.events)
             }
         }
 

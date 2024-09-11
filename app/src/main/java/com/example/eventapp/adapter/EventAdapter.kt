@@ -3,6 +3,7 @@ package com.example.eventapp.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eventapp.R
 import com.example.eventapp.databinding.ItemEventBinding
@@ -15,6 +16,7 @@ import com.example.eventapp.DetailActivity
 
 class EventsAdapter(
     private var eventsList: List<Event>,
+    private val isHome: Boolean = true,
     private val isFavorite: (String, (Boolean) -> Unit) -> Unit,
     private val toggleFavorite: (Event, (Boolean) -> Unit) -> Unit
 ) : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
@@ -23,10 +25,19 @@ class EventsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(event: Event) {
+
+            if (!isHome) {
+                (binding.root.layoutParams as ViewGroup.MarginLayoutParams).setMargins(0, 0, 0, 0)
+                ConstraintSet().apply {
+                    clone(binding.root)
+                    setDimensionRatio(binding.cardViewImage.id, "16:9")
+                    applyTo(binding.root)
+                }
+            }
+
             binding.textViewName.text = event.name
             binding.textViewCity.text = event.embedded.venues.firstOrNull()?.city?.name
-
-            binding.imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_4_3))
+            binding.imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
 
             isFavorite(event.id) { isFav ->
                 updateHeartIcon(isFav)

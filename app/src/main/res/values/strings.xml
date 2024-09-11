@@ -21,7 +21,7 @@
     <string name="event_type">event type</string>
     <string name="default_event_type">default event type</string>
     <string name="default_country">default_country</string>
-    <string name="edit_search">City</string>
+    <string name="edit_search">Full City Name...</string>
     <string name="default_url">buse@gmail.com</string>
     <string name="click">\nclick to call</string>
     <string name="default_time">10:00</string>
@@ -49,6 +49,9 @@
     <string name="victory_sign">Victory Sign</string>
     <string name="events_welcome">What\'s going on in your city?</string>
     <string name="your_create_account">Your Create Account</string>
-    <string name="hi">Hi</string>
+    <string name="hi_home">Hi %1$s!</string>
+    <string name="heart_icon">Heart Icon</string>
+    <string name="rock">Rock</string>
+    <string name="clock">Clock</string>
 
 </resources>

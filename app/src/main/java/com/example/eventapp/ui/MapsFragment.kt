@@ -8,15 +8,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.eventapp.DetailActivity
 import com.example.eventapp.R
-import com.example.eventapp.adapter.EventInfoWindowAdapter
-import com.example.eventapp.util.Constants
+import com.example.eventapp.extension.ImageEnum
+import com.example.eventapp.extension.getImageByRatio
+import com.example.eventapp.extension.loadImage
+import com.example.eventapp.service.dataclass.Event
+import com.example.eventapp.util.Constants.EVENT_ID_KEY
 import com.example.eventapp.util.GetLocationData
 import com.example.eventapp.util.LocationHelper
 import com.example.eventapp.viewmodel.HomeViewModel
@@ -26,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -97,7 +104,7 @@ class MapsFragment : Fragment() {
         viewModel.events.observe(viewLifecycleOwner) { events ->
             CoroutineScope(Dispatchers.IO).launch {
                 withContext(Dispatchers.Main) {
-                    googleMap.clear()
+                    googleMap.clear()  // Önceki marker'ları temizle
                     events.forEach { event ->
                         val venue = event.embedded.venues.firstOrNull()
                         val location = venue?.location?.let { loc ->
@@ -108,24 +115,58 @@ class MapsFragment : Fragment() {
                             if (lat != null && lng != null) {
                                 LatLng(lat, lng)
                             } else {
-                                Log.w("MapsFragment", "Invalid location data for event: ${event.name}")
+                                Log.w(
+                                    "MapsFragment",
+                                    "Invalid location data for event: ${event.name}"
+                                )
                                 null
                             }
                         }
 
                         if (location != null) {
-                            googleMap.addMarker(
+                            val marker = googleMap.addMarker(
                                 MarkerOptions().position(location).title(event.name)
                             )
+                            marker?.tag = event
                         }
                     }
+
                     val userLocation = LatLng(latitude, longitude)
                     googleMap.addMarker(
                         MarkerOptions().position(userLocation).title("Current Location")
                     )
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10f))
+
+
+                    googleMap.setOnMarkerClickListener { marker ->
+                        val markerEvent = marker.tag as? Event
+                        if (markerEvent != null) {
+                            showEventDetails(markerEvent)
+                        }
+                        true
+                    }
                 }
             }
         }
+    }
+
+    private fun showEventDetails(event: Event) {
+        val cardView = view?.findViewById<MaterialCardView>(R.id.markerDetailsCard)
+        cardView?.visibility = View.VISIBLE
+
+        cardView?.setOnClickListener {
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra(EVENT_ID_KEY, event.id)
+            requireContext().startActivity(intent)
+        }
+
+        val imageView = view?.findViewById<ImageView>(R.id.imageActivity)
+        val textViewName = view?.findViewById<TextView>(R.id.textViewName)
+        val textViewCity = view?.findViewById<TextView>(R.id.textViewCity)
+
+        textViewName?.text = event.name
+        textViewCity?.text = event.embedded.venues.firstOrNull()?.city?.name ?: "Unknown City"
+
+        imageView?.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
     }
 }

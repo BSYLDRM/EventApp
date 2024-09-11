@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/spacer_8"
-    android:layout_marginHorizontal="@dimen/spacer_32">
+    android:layout_marginHorizontal="@dimen/spacer_32"
+    android:padding="@dimen/spacer_8">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="3:4"
@@ -23,27 +24,28 @@
                 android:id="@+id/imageActivity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="?backgroundColor"
                 android:contentDescription="@string/app_name"
                 android:foreground="@drawable/gradient_foreground"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_back"
+                android:src="@drawable/image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-               android:id="@+id/imageHeart"
-                android:background="@drawable/mini_button_background"
-                android:src="@drawable/heart"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:padding="@dimen/spacer_16"
+                android:id="@+id/imageHeart"
+                android:layout_width="@dimen/spacer_64"
+                android:layout_height="@dimen/spacer_64"
                 android:layout_margin="@dimen/spacer_16"
-                app:tint="@color/white"
+                android:background="@drawable/mini_button_background"
+                android:contentDescription="@string/heart_icon"
+                android:padding="@dimen/spacer_16"
+                android:src="@drawable/heart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                />
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/textViewName"
@@ -65,9 +67,9 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="@string/default_city"
-
-                />
+                tools:text="@string/default_city" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

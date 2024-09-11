@@ -70,9 +70,9 @@ class DetailActivity : AppCompatActivity() {
                     textActivityName.text = it.name
                     textAdrees.text = it.embedded.venues.firstOrNull()?.address?.line1 ?: "UNKNOWN"
                     textDate.text = it.dates.start.localDate
-                    textCity.text = it.embedded.venues.firstOrNull()?.city?.name ?: "UNKNOWN"
+                    textEventType.text = it.classifications.firstOrNull()?.genre?.name
                     textTime.text = it.dates.start.localTime
-                    imageViewActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_4_3))
+                    imageViewActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
 
                     it.url.let { url ->
                         btnUrl.setOnClickListener {

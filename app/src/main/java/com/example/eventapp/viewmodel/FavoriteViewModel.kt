@@ -68,13 +68,13 @@ class FavoriteViewModel : ViewModel(){
         }
     }
 
-  fun fetchFavoritesFromFirebase() {
+  private fun fetchFavoritesFromFirebase() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val firestore = FirebaseFirestore.getInstance()
 
-        firestore.collection(Constants.USERS_COLLECTION)
+        firestore.collection(USERS_COLLECTION)
             .document(userId)
-            .collection(Constants.FAVORITES_COLLECTION)
+            .collection(FAVORITES_COLLECTION)
             .get()
             .addOnSuccessListener { documents ->
                 val favoriteIds = documents.map { it.id }
