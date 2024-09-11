@@ -9,11 +9,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentSearchBinding
 import com.example.eventapp.viewmodel.FavoriteViewModel
 import com.example.eventapp.viewmodel.SearchViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
@@ -22,7 +27,7 @@ class SearchFragment : Fragment() {
     private val favoriteViewModel: FavoriteViewModel by viewModels()
 
     private lateinit var adapter: EventsAdapter
-
+    private var searchJob: Job? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,14 +54,22 @@ class SearchFragment : Fragment() {
         binding.editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val query = s.toString()
+
+                searchJob?.cancel()
                 if (query.length >= 3) {
-                    viewModel.searchEvents(city = query)
+                    searchJob = lifecycleScope.launch {
+                        delay(500)
+                        viewModel.searchEvents(city = query)
+                    }
+                } else {
+                    adapter.submitList(emptyList())
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+
         observeViewModel()
     }
 
@@ -74,3 +87,6 @@ class SearchFragment : Fragment() {
         }
     }
 }
+
+
+

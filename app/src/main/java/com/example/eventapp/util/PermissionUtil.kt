@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 
 class PermissionUtil {
-
     companion object {
         fun checkAndRequestLocationPermission(
             context: Context,

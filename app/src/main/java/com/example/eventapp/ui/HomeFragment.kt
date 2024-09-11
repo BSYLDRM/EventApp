@@ -1,11 +1,11 @@
 package com.example.eventapp.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.provider.Settings
@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
                 locationHelper.getLastKnownLocation()
             } else {
                 Log.d("HomeFragment", "Location permission denied")
-                showLocationPermissionDeniedSnackbar()
+                showLocationPermissionDeniedSnackBar()
             }
         }
 
@@ -62,15 +62,12 @@ class HomeFragment : Fragment() {
 
         binding.lottieAnimationView.visibility = View.VISIBLE
         binding.recyclerViewHomeEvent.visibility = View.GONE
+    }
 
-        binding.editTextName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.searchEventsByName(s.toString())
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
+    override fun onResume() {
+        super.onResume()
+        checkLocationServicesEnabled()
+        locationHelper.getLastKnownLocation()
     }
 
     private fun checkLocationServicesEnabled() {
@@ -79,13 +76,13 @@ class HomeFragment : Fragment() {
         val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
         if (!isGpsEnabled && !isNetworkEnabled) {
-            showLocationSettingsSnackbar()
+            showLocationSettingsSnackBar()
         }
     }
 
-    private fun showLocationSettingsSnackbar() {
-        Snackbar.make(binding.root,getString(R.string.location_services_disabled) , Snackbar.LENGTH_INDEFINITE)
-        .setAction(getString(R.string.open_settings)) {
+    private fun showLocationSettingsSnackBar() {
+        Snackbar.make(binding.root, getString(R.string.location_services_disabled), Snackbar.LENGTH_INDEFINITE)
+            .setAction(getString(R.string.open_settings)) {
                 openLocationSettings()
             }
             .show()
@@ -96,13 +93,19 @@ class HomeFragment : Fragment() {
         startActivity(intent)
     }
 
-
-    private fun showLocationPermissionDeniedSnackbar() {
-        Snackbar.make(binding.root,getString(R.string.location_permission_denied), Snackbar.LENGTH_LONG)
+    private fun showLocationPermissionDeniedSnackBar() {
+        Snackbar.make(binding.root, getString(R.string.location_permission_denied), Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.grant_permission)) {
-                checkLocationPermission()
+                openAppSettings()
             }
             .show()
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", requireContext().packageName, null)
+        intent.data = uri
+        startActivity(intent)
     }
 
     private fun setupLocationHelper() {
@@ -113,7 +116,6 @@ class HomeFragment : Fragment() {
                 val countryCode = locationData?.second
                 if (city != null) {
                     Log.d("HomeFragment", "City: $city, Country: $countryCode")
-                    binding.textCity.text = city
                     viewModel.searchEventsByCity(city, countryCode)
                 } else {
                     Log.d("HomeFragment", "City is null")
@@ -131,6 +133,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeViewModel() {
         viewModel.events.observe(viewLifecycleOwner) { events ->
             with(binding) {
@@ -156,6 +159,11 @@ class HomeFragment : Fragment() {
                     recyclerViewHomeEvent.visibility = View.GONE
                 }
             }
+        }
+
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
+            val formattedName = name.replaceFirstChar { it.uppercase() }
+            binding.textName.text = getString(R.string.hi) + " " + formattedName
         }
     }
 }

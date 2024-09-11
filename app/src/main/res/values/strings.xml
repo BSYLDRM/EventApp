@@ -45,4 +45,10 @@
     <string name="open_settings">Settings</string>
     <string name="location_permission_denied">Location permission denied. Please allow..</string>
     <string name="grant_permission">Allow</string>
+    <string name="home_background">Home Background</string>
+    <string name="victory_sign">Victory Sign</string>
+    <string name="events_welcome">What\'s going on in your city?</string>
+    <string name="your_create_account">Your Create Account</string>
+    <string name="hi">Hi</string>
+
 </resources>

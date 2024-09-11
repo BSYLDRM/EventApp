@@ -4,6 +4,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.eventapp.R
 import com.example.eventapp.service.dataclass.Image
 
 fun List<Image>.getImageByRatio(ratio: ImageEnum): String {
@@ -12,7 +13,7 @@ fun List<Image>.getImageByRatio(ratio: ImageEnum): String {
 }
 
 fun ImageView.loadImage(image: String) {
-    Glide.with(this.context).load(image).into(this)
+    Glide.with(this.context).load(image).placeholder(R.drawable.app_logo).into(this)
 }
 
 fun Fragment.openFragment(fragment: Fragment, containerId: Int) {

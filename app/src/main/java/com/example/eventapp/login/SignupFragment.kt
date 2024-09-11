@@ -33,7 +33,9 @@ class SignupFragment : Fragment() {
             btnSignup.setOnClickListener {
                 val email = editSignupEmailAddress.text.toString()
                 val password = editSignupPassword.text.toString()
-                signupViewModel.signUpUser(email, password)
+                val displayName = editTextName.text.toString()
+
+                signupViewModel.signUpUser(email, password, displayName)
             }
         }
 
