@@ -6,13 +6,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentSearchBinding
+import com.example.eventapp.extension.showToast
+import com.example.eventapp.extension.visibilityGone
+import com.example.eventapp.extension.visibilityVisible
 import com.example.eventapp.viewmodel.FavoriteViewModel
 import com.example.eventapp.viewmodel.SearchViewModel
 import kotlinx.coroutines.Job
@@ -62,8 +64,8 @@ class SearchFragment : Fragment() {
                         viewModel.searchEvents(city = query)
                     } else {
                         adapter.submitList(emptyList())
-                        binding.lottieNoData.visibility = View.VISIBLE
-                        binding.recyclerSearch.visibility = View.GONE
+                        binding.lottieNoData.visibilityVisible()
+                        binding.recyclerSearch.visibilityGone()
                     }
                 }
             }
@@ -77,18 +79,20 @@ class SearchFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.events.observe(viewLifecycleOwner) { eventsResponse ->
-            if (eventsResponse?.embedded == null) {
-                binding.lottieNoData.visibility = View.VISIBLE
-                binding.recyclerSearch.visibility = View.GONE
-            } else {
-                binding.lottieNoData.visibility = View.GONE
-                binding.recyclerSearch.visibility = View.VISIBLE
-                adapter.submitList(eventsResponse.embedded.events)
+            with(binding) {
+                if (eventsResponse?.embedded == null) {
+                    lottieNoData.visibilityVisible()
+                    recyclerSearch.visibilityGone()
+                } else {
+                    lottieNoData.visibilityGone()
+                    recyclerSearch.visibilityVisible()
+                    adapter.submitList(eventsResponse.embedded.events)
+                }
             }
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+            requireContext().showToast(errorMessage)
         }
     }
 }

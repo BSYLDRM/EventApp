@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
-import com.example.eventapp.R
 import com.example.eventapp.databinding.ItemEventBinding
 import com.example.eventapp.util.Constants.EVENT_ID_KEY
 import com.example.eventapp.extension.ImageEnum
@@ -13,6 +12,7 @@ import com.example.eventapp.extension.getImageByRatio
 import com.example.eventapp.extension.loadImage
 import com.example.eventapp.service.dataclass.Event
 import com.example.eventapp.DetailActivity
+import com.example.eventapp.extension.setFavoriteIcon
 
 class EventsAdapter(
     private var eventsList: List<Event>,
@@ -24,20 +24,20 @@ class EventsAdapter(
     inner class EventsViewHolder(private val binding: ItemEventBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(event: Event) {
+        fun bind(event: Event) = with(binding) {
 
             if (!isHome) {
-                (binding.root.layoutParams as ViewGroup.MarginLayoutParams).setMargins(0, 0, 0, 0)
+                (root.layoutParams as ViewGroup.MarginLayoutParams).setMargins(0, 0, 0, 0)
                 ConstraintSet().apply {
-                    clone(binding.root)
-                    setDimensionRatio(binding.cardViewImage.id, "16:9")
-                    applyTo(binding.root)
+                    clone(root)
+                    setDimensionRatio(cardViewImage.id, "16:9")
+                    applyTo(root)
                 }
             }
 
-            binding.textViewName.text = event.name
-            binding.textViewCity.text = event.embedded.venues.firstOrNull()?.city?.name
-            binding.imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
+            textViewName.text = event.name
+            textViewCity.text = event.embedded.venues.firstOrNull()?.city?.name
+            imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
 
             isFavorite(event.id) { isFav ->
                 updateHeartIcon(isFav)
@@ -55,11 +55,7 @@ class EventsAdapter(
         }
 
         private fun updateHeartIcon(isFav: Boolean) {
-            if (isFav) {
-                binding.imageHeart.setImageResource(R.drawable.heart_color)
-            } else {
-                binding.imageHeart.setImageResource(R.drawable.heart)
-            }
+            binding.imageHeart.setFavoriteIcon(isFav)
         }
 
         private fun navigateToDetail(eventId: String) {

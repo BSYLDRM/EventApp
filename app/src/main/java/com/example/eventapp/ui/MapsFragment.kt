@@ -19,7 +19,9 @@ import com.example.eventapp.databinding.FragmentMapsBinding
 import com.example.eventapp.extension.ImageEnum
 import com.example.eventapp.extension.getImageByRatio
 import com.example.eventapp.extension.loadImage
+import com.example.eventapp.extension.visibilityVisible
 import com.example.eventapp.service.dataclass.Event
+import com.example.eventapp.util.Constants
 import com.example.eventapp.util.Constants.EVENT_ID_KEY
 import com.example.eventapp.util.GetLocationData
 import com.example.eventapp.util.LocationHelper
@@ -28,7 +30,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +44,7 @@ class MapsFragment : Fragment() {
     private lateinit var locationHelper: LocationHelper
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentMapsBinding
+    private var selectedMarker: Marker? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         setupLocationHelper(googleMap)
@@ -76,10 +81,10 @@ class MapsFragment : Fragment() {
                 val city = locationData?.first
                 val countryCode = locationData?.second
                 if (city != null) {
-                    Log.d("MapsFragment", "City: $city, Country: $countryCode")
+
                     viewModel.searchEventsByCity(city, countryCode)
                 } else {
-                    Log.d("MapsFragment", "City is null")
+                    Log.d("MapsFragment", Constants.CITY_NULL)
                 }
             }
             observeEvents(googleMap, latitude, longitude)
@@ -104,6 +109,7 @@ class MapsFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 withContext(Dispatchers.Main) {
                     googleMap.clear()
+
                     events.forEach { event ->
                         val venue = event.embedded.venues.firstOrNull()
                         val location = venue?.location?.let { loc ->
@@ -114,17 +120,21 @@ class MapsFragment : Fragment() {
                             if (lat != null && lng != null) {
                                 LatLng(lat, lng)
                             } else {
-                                Log.w(
-                                    "MapsFragment",
-                                    "Invalid location data for event: ${event.name}"
-                                )
+
                                 null
                             }
                         }
 
                         if (location != null) {
                             val marker = googleMap.addMarker(
-                                MarkerOptions().position(location).title(event.name)
+                                MarkerOptions()
+                                    .position(location)
+                                    .title(event.name)
+                                    .icon(
+                                        BitmapDescriptorFactory.defaultMarker(
+                                            BitmapDescriptorFactory.HUE_RED
+                                        )
+                                    )
                             )
                             marker?.tag = event
                         }
@@ -140,6 +150,16 @@ class MapsFragment : Fragment() {
                         val markerEvent = marker.tag as? Event
                         if (markerEvent != null) {
                             showEventDetails(markerEvent)
+
+                            selectedMarker?.setIcon(
+                                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+                            )
+
+                            marker.setIcon(
+                                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
+                            )
+
+                            selectedMarker = marker
                         }
                         true
                     }
@@ -149,18 +169,20 @@ class MapsFragment : Fragment() {
     }
 
     private fun showEventDetails(event: Event) {
-        binding.markerDetailsCard.visibility = View.VISIBLE
+        with(binding) {
+            markerDetailsCard.visibilityVisible()
 
-        binding.markerDetailsCard.setOnClickListener {
-            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
-                putExtra(EVENT_ID_KEY, event.id)
+            markerDetailsCard.setOnClickListener {
+                val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                    putExtra(EVENT_ID_KEY, event.id)
+                }
+                requireContext().startActivity(intent)
             }
-            requireContext().startActivity(intent)
+
+            textViewName.text = event.name
+            textViewCity.text = event.embedded.venues.firstOrNull()?.city?.name ?: "Unknown City"
+
+            imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
         }
-
-        binding.textViewName.text = event.name
-        binding.textViewCity.text = event.embedded.venues.firstOrNull()?.city?.name ?: "Unknown City"
-
-        binding.imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
     }
 }

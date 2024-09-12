@@ -18,6 +18,10 @@ import androidx.lifecycle.lifecycleScope
 import com.example.eventapp.R
 import com.example.eventapp.adapter.EventsAdapter
 import com.example.eventapp.databinding.FragmentHomeBinding
+import com.example.eventapp.extension.showToast
+import com.example.eventapp.extension.visibilityGone
+import com.example.eventapp.extension.visibilityVisible
+import com.example.eventapp.util.Constants
 import com.example.eventapp.util.GetLocationData
 import com.example.eventapp.util.LocationHelper
 import com.example.eventapp.util.PermissionUtil
@@ -39,7 +43,6 @@ class HomeFragment : Fragment() {
             if (isGranted) {
                 locationHelper.getLastKnownLocation()
             } else {
-                Log.d("HomeFragment", "Location permission denied")
                 showLocationPermissionDeniedSnackBar()
             }
         }
@@ -60,9 +63,9 @@ class HomeFragment : Fragment() {
         observeViewModel()
         checkLocationServicesEnabled()
 
-        binding.lottieAnimationView.visibility = View.VISIBLE
-        binding.lottieNoData.visibility = View.GONE
-        binding.recyclerViewHomeEvent.visibility = View.GONE
+        binding.lottieAnimationView.visibilityVisible()
+        binding.lottieNoData.visibilityGone()
+        binding.recyclerViewHomeEvent.visibilityGone()
     }
 
     override fun onResume() {
@@ -72,7 +75,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkLocationServicesEnabled() {
-        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
@@ -82,7 +86,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun showLocationSettingsSnackBar() {
-        Snackbar.make(binding.root, getString(R.string.location_services_disabled), Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(
+            binding.root,
+            getString(R.string.location_services_disabled),
+            Snackbar.LENGTH_INDEFINITE
+        )
             .setAction(getString(R.string.open_settings)) {
                 openLocationSettings()
             }
@@ -95,7 +103,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun showLocationPermissionDeniedSnackBar() {
-        Snackbar.make(binding.root, getString(R.string.location_permission_denied), Snackbar.LENGTH_LONG)
+        Snackbar.make(
+            binding.root,
+            getString(R.string.location_permission_denied),
+            Snackbar.LENGTH_LONG
+        )
             .setAction(getString(R.string.grant_permission)) {
                 openAppSettings()
             }
@@ -116,10 +128,9 @@ class HomeFragment : Fragment() {
                 val city = locationData?.first
                 val countryCode = locationData?.second
                 if (city != null) {
-                    Log.d("HomeFragment", "City: $city, Country: $countryCode")
                     viewModel.searchEventsByCity(city, countryCode)
                 } else {
-                    Log.d("HomeFragment", "City is null")
+                    requireContext().showToast(Constants.CITY_NULL)
                 }
             }
         }
@@ -153,13 +164,14 @@ class HomeFragment : Fragment() {
                         setAlpha(true)
                         set3DItem(true)
                     }
-                    lottieAnimationView.visibility = View.GONE
-                    lottieNoData.visibility = View.GONE
-                    recyclerViewHomeEvent.visibility = View.VISIBLE
+
+                    lottieAnimationView.visibilityGone()
+                    lottieNoData.visibilityGone()
+                    recyclerViewHomeEvent.visibilityVisible()
                 } else {
-                    lottieAnimationView.visibility = View.GONE
-                    lottieNoData.visibility = View.VISIBLE
-                    recyclerViewHomeEvent.visibility = View.GONE
+                    lottieAnimationView.visibilityGone()
+                    lottieNoData.visibilityVisible()
+                    recyclerViewHomeEvent.visibilityGone()
                 }
             }
         }

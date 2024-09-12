@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.eventapp.MainActivity
 import com.example.eventapp.databinding.FragmentSignInBinding
+import com.example.eventapp.extension.showToast
 import com.example.eventapp.util.Constants
 import com.example.eventapp.viewmodel.LoginViewModel
 
@@ -42,7 +42,7 @@ class SignInFragment : Fragment() {
         }
 
         loginViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            message?.let { showToast(it) }
+            message?.let { requireContext().showToast(it) }
         }
     }
 
@@ -52,9 +52,5 @@ class SignInFragment : Fragment() {
             putExtra(Constants.FRAGMENT_TO_OPEN, Constants.HOME_FRAGMENT)
         }
         startActivity(intent)
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

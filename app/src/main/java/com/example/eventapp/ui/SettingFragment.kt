@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eventapp.databinding.FragmentSettingBinding
+import com.example.eventapp.extension.showToast
 import com.example.eventapp.login.LoginScreenActivity
+import com.example.eventapp.util.Constants.ACC_DELETED
+import com.example.eventapp.util.Constants.LOGGED_OUT
 import com.example.eventapp.viewmodel.SettingViewModel
 
 class SettingFragment : Fragment() {
@@ -29,8 +31,8 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            if (message == "Logged out successfully" || message == "Account deleted successfully") {
+            requireContext().showToast(message)
+            if (message == LOGGED_OUT || message == ACC_DELETED) {
                 navigateToLogin()
             }
         }
