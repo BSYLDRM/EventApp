@@ -15,4 +15,7 @@ object Constants {
     const val LOGGED_OUT = "Logged out successfully"
     const val ACC_DELETED = "Account deleted successfully"
     const val CITY_NULL = "City is null"
+    const val CREATE_USER_ERROR = "Failed to create user"
+    const val UNKNOWN_ERROR = "An unknown error occurred"
+    const val FAILED_UPDATE_PROFILE = "Failed to update profile"
 }

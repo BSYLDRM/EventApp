@@ -30,7 +30,7 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = eventApiService.getEvents(city = city)
-                if (response.embedded.events.isEmpty()) {
+                if (response.embedded == null) {
                     searchEventsByCountry(countryCode)
                 } else {
                     _events.postValue(response.embedded.events)

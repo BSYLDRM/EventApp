@@ -33,6 +33,3 @@ interface Service {
 const val searchEvent = "events.json"
 const val eventDetails = "events/{id}.json"
 const val geocoding = "geocode/json"
-
-
-
