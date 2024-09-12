@@ -8,7 +8,7 @@ import com.example.eventapp.R
 import com.example.eventapp.databinding.ActivityLoginScreenBinding
 import com.example.eventapp.extension.openFragment
 
-class LoginScreen : AppCompatActivity() {
+class LoginScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginScreenBinding
     private lateinit var lottieAnimationView: LottieAnimationView
 

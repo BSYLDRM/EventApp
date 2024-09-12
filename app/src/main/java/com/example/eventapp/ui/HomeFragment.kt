@@ -27,10 +27,10 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
+
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
     private val favoriteViewModel: FavoriteViewModel by viewModels()
-
     private lateinit var locationHelper: LocationHelper
     private val getLocationData = GetLocationData()
 

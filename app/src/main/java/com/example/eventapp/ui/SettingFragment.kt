@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eventapp.databinding.FragmentSettingBinding
-import com.example.eventapp.login.LoginScreen
+import com.example.eventapp.login.LoginScreenActivity
 import com.example.eventapp.viewmodel.SettingViewModel
 
 class SettingFragment : Fragment() {
@@ -47,7 +47,7 @@ class SettingFragment : Fragment() {
     }
 
     private fun navigateToLogin() {
-        val intent = Intent(requireContext(), LoginScreen::class.java)
+        val intent = Intent(requireContext(), LoginScreenActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
     }

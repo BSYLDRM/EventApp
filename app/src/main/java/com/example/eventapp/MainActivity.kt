@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.eventapp.databinding.ActivityMainBinding
-import com.example.eventapp.login.LoginScreen
+import com.example.eventapp.login.LoginScreenActivity
 import com.example.eventapp.ui.FavoriteFragment
 import com.example.eventapp.ui.HomeFragment
 import com.example.eventapp.ui.MapsFragment
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (FirebaseAuth.getInstance().currentUser == null) {
-            val intent = Intent(this, LoginScreen::class.java)
+            val intent = Intent(this, LoginScreenActivity::class.java)
             startActivity(intent)
             finish()
         }

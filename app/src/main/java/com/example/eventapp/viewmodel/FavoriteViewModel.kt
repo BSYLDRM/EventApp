@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel : ViewModel(){
+class FavoriteViewModel : ViewModel() {
 
     private val firestore by lazy { FirebaseFirestore.getInstance() }
     private val auth by lazy { FirebaseAuth.getInstance() }
@@ -24,7 +24,7 @@ class FavoriteViewModel : ViewModel(){
     private val eventApiService = RetrofitInstance.api
 
 
-    fun fetchFavoriteEvents(favoriteIds: List<String>) {
+    private fun fetchFavoriteEvents(favoriteIds: List<String>) {
         viewModelScope.launch {
             try {
                 val events = favoriteIds.map { id ->
@@ -67,9 +67,8 @@ class FavoriteViewModel : ViewModel(){
         }
     }
 
-  private fun fetchFavoritesFromFirebase() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val firestore = FirebaseFirestore.getInstance()
+    fun fetchFavoritesFromFirebase() {
+        val userId = auth.currentUser?.uid ?: return
 
         firestore.collection(USERS_COLLECTION)
             .document(userId)
@@ -79,4 +78,5 @@ class FavoriteViewModel : ViewModel(){
                 val favoriteIds = documents.map { it.id }
                 fetchFavoriteEvents(favoriteIds)
             }
-    }}
+    }
+}

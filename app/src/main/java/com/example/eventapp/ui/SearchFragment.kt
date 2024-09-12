@@ -20,11 +20,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
-    private lateinit var binding: FragmentSearchBinding
 
+    private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModels()
     private val favoriteViewModel: FavoriteViewModel by viewModels()
-
     private lateinit var adapter: EventsAdapter
     private var searchJob: Job? = null
 
