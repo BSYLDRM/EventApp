@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
@@ -29,7 +28,6 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private val viewModel: DetailViewModel by viewModels()
     private var map: GoogleMap? = null
-    private lateinit var btnUrl: Button
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private var isFavorite = false
@@ -39,7 +37,6 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
-        btnUrl = findViewById(R.id.btnUrl)
 
         intent?.getStringExtra(Constants.EVENT_ID_KEY)?.let { eventId ->
             fetchEventDetails(eventId)

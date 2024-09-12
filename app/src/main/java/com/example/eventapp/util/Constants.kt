@@ -9,5 +9,5 @@ object Constants {
     const val COUNTRY ="country"
     const val FRAGMENT_TO_OPEN = "fragment_to_open"
     const val HOME_FRAGMENT = "home"
-    const val API_KEY = "api_key"
+    const val API_KEY = "apikey"
 }

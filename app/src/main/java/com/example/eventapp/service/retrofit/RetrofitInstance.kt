@@ -2,6 +2,7 @@ package com.example.eventapp.service.retrofit
 
 import com.example.eventapp.BuildConfig
 import com.example.eventapp.service.Service
+import com.example.eventapp.util.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,7 +13,7 @@ object RetrofitInstance {
             val originalRequest = chain.request()
             val url = originalRequest.url
                 .newBuilder()
-                .addQueryParameter("apikey", BuildConfig.API_KEY)
+                .addQueryParameter(Constants.API_KEY, BuildConfig.API_KEY)
                 .build()
 
             val request = originalRequest.newBuilder()
