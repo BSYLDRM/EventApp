@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 
 class SignupViewModel : ViewModel() {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     private val _signupStatus = MutableLiveData<Boolean>()
     val signupStatus: LiveData<Boolean> get() = _signupStatus

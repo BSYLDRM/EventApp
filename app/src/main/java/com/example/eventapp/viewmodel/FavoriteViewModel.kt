@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 
 class FavoriteViewModel : ViewModel(){
 
-    private val firestore = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
+    private val firestore by lazy { FirebaseFirestore.getInstance() }
+    private val auth by lazy { FirebaseAuth.getInstance() }
 
     private val _favoriteEvents = MutableLiveData<List<Event>>()
     val favoriteEvents: LiveData<List<Event>> get() = _favoriteEvents
