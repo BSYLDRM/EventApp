@@ -7,6 +7,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.eventapp.R
 import com.example.eventapp.databinding.ActivityLoginScreenBinding
 import com.example.eventapp.extension.openFragment
+import com.example.eventapp.extension.visibilityVisible
 
 class LoginScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginScreenBinding
@@ -18,7 +19,7 @@ class LoginScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         lottieAnimationView = findViewById(R.id.lottie_animation_view)
-        lottieAnimationView.visibility = View.VISIBLE
+        lottieAnimationView.visibilityVisible()
         lottieAnimationView.playAnimation()
 
         binding.buttonLogin.setOnClickListener {

@@ -40,22 +40,18 @@ class EventsAdapter(
             imageActivity.loadImage(event.images.getImageByRatio(ImageEnum.IMAGE_16_9))
 
             isFavorite(event.id) { isFav ->
-                updateHeartIcon(isFav)
+                binding.imageHeart.setFavoriteIcon(isFav)
             }
 
             binding.imageHeart.setOnClickListener {
                 toggleFavorite(event) { isFav ->
-                    updateHeartIcon(isFav)
+                    binding.imageHeart.setFavoriteIcon(isFav)
                 }
             }
 
             binding.root.setOnClickListener {
                 navigateToDetail(event.id)
             }
-        }
-
-        private fun updateHeartIcon(isFav: Boolean) {
-            binding.imageHeart.setFavoriteIcon(isFav)
         }
 
         private fun navigateToDetail(eventId: String) {
